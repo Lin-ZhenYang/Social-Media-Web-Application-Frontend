@@ -1,20 +1,50 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {withRouter} from "react-router-dom";
+import CurrentInfo from "./profileElements/currentInfo";
+import UpdateInfo from "./profileElements/updateInfo";
+import UserPicUpdate from "./profileElements/userPicUpdate";
+import { connect } from 'react-redux';
 
-class Profile extends React.Component {
+class Profile extends React.Component{
+  constructor(props) {
+        super(props);
+    }
+
   onBackMain = () => {
-  	this.props.history.push('/main');
+    this.props.goToMain();
   }
-
   render() {
     return (
-        <div>
-		  <h1>Profile</h1>
-		  <button id="profileMainBtn" onClick = {this.onBackMain}>Main Page</button>
-		</div>
-		)
+      <div >
+        <button id="profileMainBtn" onClick={this.onBackMain} >Main Page</button>
+        <table>
+          <tbody>
+            <tr>
+              <td><UserPicUpdate /></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><CurrentInfo /></td>
+              <td><UpdateInfo /></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    );
   }
 }
 
-export default withRouter(Profile);
+
+
+const mapStateToProps = (state) => {
+    return {
+        user: state.user
+    }
+};
+const mapDispatchToProps = (dispatch) => {
+    return {
+        goToMain: ()=> dispatch({type: 'TO_MAIN_PAGE'})
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Profile);

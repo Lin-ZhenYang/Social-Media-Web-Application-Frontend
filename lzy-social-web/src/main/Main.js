@@ -1,6 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {withRouter} from "react-router-dom";
+import MainUser from './mainElements/mainUser';
+import MainFollower from './mainElements/mainFollower';
+import NewPost from './mainElements/newPost';
+import SearchBar from './mainElements/searchBar';
+import Posts from './mainElements/posts';
 
 class Main extends React.Component {
   onLogout = () => {
@@ -14,12 +19,25 @@ class Main extends React.Component {
   render() {
     return (
         <div>
-		  <h1>MAIN</h1>
-		  <button id="mainLogoutBtn" onClick = {this.onLogout}>Log Out</button>
-		  <button id="mainProfileBtn" onClick = {this.onProfile}>Profile</button>
+          <table>
+             <tbody>
+               <tr>
+                   <td><MainUser /></td>
+                   <td><NewPost /></td>
+               </tr>
+               <tr>
+                    <td></td>
+                    <td><SearchBar /></td>
+               </tr>
+               <tr>
+                   <td><MainFollower /></td>
+                   <td><Posts /></td>
+               </tr>
+             </tbody>
+          </table>
 		</div>
 		)
   }
 }
 
-export default withRouter(Main);
+export default Main;

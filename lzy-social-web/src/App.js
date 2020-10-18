@@ -1,21 +1,26 @@
 import React from 'react';
 import './App.css';
-import Login from './welcomePage/Login';
-import Registration from './welcomePage/Registration';
-import {withRouter} from "react-router-dom";
+import Welcome from './welcome/welcome';
+import Main from './main/main';
+import Profile from './profile/profile';
+import { connect } from 'react-redux';
 
-class App extends React.Component {
-    render() {
-        return (
-          <div>
-              <h1>welcomepage</h1>
-              <div  className='rowC'>
-                  <Login />
-                  <Registration />
-              </div>
-            </div>
-        );
-    }
+const App = ({location}) => {
+  let currView;
+  if (location=="main"){
+    currView = <Main />;
+  } else if (location=="profile"){
+    currView = <Profile />
+  } else {
+    currView = <Welcome />
+  }
+  return(
+    <div>
+      {currView}
+    </div>
+  )
 }
 
-export default withRouter(App);
+export default connect((state)=>{
+  return {location: state.location}
+})(App)
