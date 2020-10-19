@@ -1,9 +1,15 @@
-const Reducer = ( state={
+const initialState = {
     location : "welcome",
     user:{},
     profileUpdateMsg:"",
-    profileUpdateWarning:""
-    },action) => {
+    profileUpdateWarning:"",
+    registerErrorMsg: "",
+    loginErrorMsg:"",
+    followerList:[],
+    userPosts:[]
+};
+
+const Reducer = ( state=initialState,action) => {
     switch (action.type){
         case 'TO_WELCOME_PAGE':
             return {...state, location: "welcome" }
@@ -17,6 +23,14 @@ const Reducer = ( state={
             return {...state, profileUpdateMsg: action.msg}
         case 'PROFILE_UPDATE_WARNING':
             return {...state, profileUpdateWarning: action.pWarning}
+        case 'REGISTER_ERROR':
+            return {...state, registerErrorMsg: action.errorMsg}
+        case 'LOGIN_ERROR':
+            return {...state, loginErrorMsg: action.loginError}
+        case 'ADD_FOLLOWER_LIST':
+            return {...state, followerList: action.followers}
+        case 'UPDATE_POSTS':
+            return {...state, userPosts: action.posts}
         default:
             return state;
     }

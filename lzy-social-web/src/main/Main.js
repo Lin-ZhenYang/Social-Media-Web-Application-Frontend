@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {withRouter} from "react-router-dom";
 import MainUser from './mainElements/mainUser';
 import MainFollower from './mainElements/mainFollower';
 import NewPost from './mainElements/newPost';
@@ -8,13 +7,10 @@ import SearchBar from './mainElements/searchBar';
 import Posts from './mainElements/posts';
 
 class Main extends React.Component {
-  onLogout = () => {
-  	this.props.history.push('/');
+  constructor(props) {
+        super(props);
   }
 
-  onProfile = () => {
-  	this.props.history.push('/profile');
-  }
 
   render() {
     return (

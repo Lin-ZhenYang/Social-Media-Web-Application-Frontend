@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 
-export const Registration = ({goToMain, registerUser}) => {
+export const Registration = ({goToMain, registerUser, registerErrorMsg,registerError }) => {
   const validateInfo =(uname, dob, email, phone, zipcode, pw1, pw2) => {
 	var warning = "";
 	var success = true;
@@ -86,20 +86,17 @@ export const Registration = ({goToMain, registerUser}) => {
     }
 	
 	if (success){
+		registerError("");
 		return true;
 	} else{
+		registerError(warning);
 		console.log(warning);
 		return false;
 	}
   }
 
   const submitBtnHandler = (uname,dob,email,phone,zipcode,pw1,pw2) => {
-  	//alert(email,phone,zipcode,pw1,pw2);
-  	console.log("clicked");
   	if (validateInfo(uname,dob,email,phone,zipcode,pw1,pw2)){
-  		alert("good");
-  		console.log(uname.value,dob.value,email.value,phone.value,zipcode.value,pw1.value,pw2.value);
-  		console.log("good");
   		let newUser = {
   			username: uname.value,
   			dob: dob.value,
@@ -111,9 +108,7 @@ export const Registration = ({goToMain, registerUser}) => {
   		registerUser(newUser);
   		goToMain();
   	} else{
-  		console.log(uname.value,dob.value,email.value,phone.value,zipcode.value,pw1.value,pw2.value);
-  		console.log("failed");
-        alert("failed");
+
   	}
   }
 
@@ -169,11 +164,8 @@ export const Registration = ({goToMain, registerUser}) => {
 		    </tr>
 		  </tbody>
 		</table>
-		<div className="alert alert-success" role="alert" id="successMsg"  style={{display:"none"}}>
-             <strong>Update Success! </strong><span id = "successText"></span>
-        </div>
-        <div className="alert alert-warning" role="alert" id="failMsg"  style={{display:"none"}}>
-             <strong>Update Error! </strong><span id = "failText"></span>.
+        <div className="alert alert-warning" role="alert" id="failMsg">
+             <strong></strong><span id = "failText">{registerErrorMsg}</span>
         </div>
 	</div>
 	);
@@ -181,13 +173,14 @@ export const Registration = ({goToMain, registerUser}) => {
 
 const mapStateToProps = (state) => {
     return {
-        
+        registerErrorMsg: state.registerErrorMsg
     }
 };
 const mapDispatchToProps = (dispatch) => {
     return {
         goToMain: ()=> dispatch({type: 'TO_MAIN_PAGE'}),
-        registerUser: (newUser)=> dispatch({type:'REGISTER_NEW_USER',newUser})
+        registerUser: (newUser)=> dispatch({type:'REGISTER_NEW_USER',newUser}),
+        registerError: (errorMsg)=> dispatch({type:"REGISTER_ERROR",errorMsg})
     }
 };
 

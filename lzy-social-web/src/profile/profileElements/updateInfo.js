@@ -1,17 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
+import './updateInfo.css';
 
 class UpdateInfo extends React.Component{
 	constructor(props) {
         super(props);
     }
     updateBtnHandler = (uname,dob,email,phone,zipcode,pw1,pw2) => {
-		if (this.validateInfo(uname,dob,email,phone,zipcode,pw1,pw2)){
-		
-		} else{
-			
-		}
+		this.validateInfo(uname,dob,email,phone,zipcode,pw1,pw2);
 	  }
     validateInfo =(uname, dob, email, phone, zipcode, pw1, pw2) => {
 		var updateMsg = "";
@@ -114,51 +111,78 @@ class UpdateInfo extends React.Component{
 		let pw2U;
 	  	return (
 	    <div>
-		    <table className="table">
-			  <thead>
-			    <tr>
-			      <th scope="col">Items</th>
-			      <th scope="col">New Values</th>
-			    </tr>
-			  </thead>
-			  <tbody>
-			  	<tr>
-			      <th scope="row">User Name</th>
-			      <td><input type="text" ref={(ele)=>unameU = ele} name="unameUpd" id="unameUpd" ></input></td>
-			    </tr>
-			    <tr>
-			      <th scope="row">Date of Birth</th>
-			      <td><input type="text" name="dobUpd" ref={(ele)=>dobU = ele} id="dobUpd"></input></td>
-			    </tr>
-			    <tr>
-			      <th scope="row">Email Address</th>
-			      <td><input type="text" name="emailUpd" ref={(ele)=>emailU = ele} id="emailUpd" ></input></td>
-			    </tr>
-			    <tr>
-			      <th scope="row">Phone Number</th>
-			      <td><input type="text" name="phoneUpd" ref={(ele)=>phoneU = ele} id="phoneUpd" ></input></td>
-			    </tr>
-			    <tr>
-			      <th scope="row">Zipcode</th>
-			      <td><input type="text" name="zipcodeUpd" ref={(ele)=>zipcodeU = ele} id="zipcodeUpd" ></input></td>
-			    </tr>
-			    <tr>
-			      <th scope="row">Password</th>
-			      <td><input type="password" name="pwd1Upd" ref={(ele)=>pw1U = ele} ></input></td>
-			    </tr>
-			    <tr>
-			      <th scope="row">Password Confirmation</th>
-			      <td><input type="password" name="pwd2Upd" ref={(ele)=>pw2U = ele} ></input></td>
-			    </tr>
-			    <tr>
-			    	<td></td>
-			    	<td><button onClick={()=>{this.updateBtnHandler(unameU,dobU,emailU,phoneU,zipcodeU,pw1U,pw2U)}} id="profileUpdateBtn">Update</button></td>
-			    </tr>
-			  </tbody>
-			</table>
+	        <div className='rowC'>
+		        <div >
+			        <h3>Current Info</h3>
+				    <table>
+				       <tbody>
+					       <tr>
+					         <td>User Name</td><td>{this.props.user.username}</td>
+					       </tr>
+					       <tr>
+					         <td>Date of Birth</td><td>{this.props.user.dob}</td>
+					       </tr>
+					       <tr>
+					         <td>Email Address</td><td>{this.props.user.email}</td>
+					       </tr>
+					       <tr>
+					         <td>Phone Number</td><td>{this.props.user.phone}</td>
+					       </tr>
+					       <tr>
+					         <td>Zipcode</td><td>{this.props.user.zipcode}</td>
+					       </tr>
+					     </tbody>
+				    </table>
+			    </div>
+		        <div>
+				    <table className="table">
+					  <thead>
+					    <tr>
+					      <th scope="col">Items</th>
+					      <th scope="col">New Values</th>
+					    </tr>
+					  </thead>
+					  <tbody>
+					  	<tr>
+					      <th scope="row">User Name</th>
+					      <td><input type="text" ref={(ele)=>unameU = ele} name="unameUpd" id="unameUpd" ></input></td>
+					    </tr>
+					    <tr>
+					      <th scope="row">Date of Birth</th>
+					      <td><input type="text" name="dobUpd" ref={(ele)=>dobU = ele} id="dobUpd"></input></td>
+					    </tr>
+					    <tr>
+					      <th scope="row">Email Address</th>
+					      <td><input type="text" name="emailUpd" ref={(ele)=>emailU = ele} id="emailUpd" ></input></td>
+					    </tr>
+					    <tr>
+					      <th scope="row">Phone Number</th>
+					      <td><input type="text" name="phoneUpd" ref={(ele)=>phoneU = ele} id="phoneUpd" ></input></td>
+					    </tr>
+					    <tr>
+					      <th scope="row">Zipcode</th>
+					      <td><input type="text" name="zipcodeUpd" ref={(ele)=>zipcodeU = ele} id="zipcodeUpd" ></input></td>
+					    </tr>
+					    <tr>
+					      <th scope="row">Password</th>
+					      <td><input type="password" name="pwd1Upd" ref={(ele)=>pw1U = ele} ></input></td>
+					    </tr>
+					    <tr>
+					      <th scope="row">Password Confirmation</th>
+					      <td><input type="password" name="pwd2Upd" ref={(ele)=>pw2U = ele} ></input></td>
+					    </tr>
+					    <tr>
+					    	<td></td>
+					    	<td><button onClick={()=>{this.updateBtnHandler(unameU,dobU,emailU,phoneU,zipcodeU,pw1U,pw2U)}} id="profileUpdateBtn">Update</button></td>
+					    </tr>
+					  </tbody>
+					</table>
+				</div>
+			</div>
 			<div className="alert alert-success" role="alert" id="successMsg" >
 	             <strong></strong><span id = "successText">{this.props.profileUpdateMsg}</span>
 	        </div>
+	        <br />
 	        <div className="alert alert-warning" role="alert" id="failMsg">
 	             <strong></strong><span id = "failText">{this.props.profileUpdateWarning}</span>
 	        </div>
