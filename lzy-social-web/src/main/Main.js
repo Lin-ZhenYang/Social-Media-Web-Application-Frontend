@@ -25,9 +25,9 @@ class Main extends React.Component {
                     <td></td>
                     <td><SearchBar /></td>
                </tr>
-               <tr>
-                   <td><MainFollower /></td>
-                   <td><Posts /></td>
+               <tr valign='top'>
+                   <td width="25%"><MainFollower /></td>
+                   <td width="50%"><Posts /></td>
                </tr>
              </tbody>
           </table>

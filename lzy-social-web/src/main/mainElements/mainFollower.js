@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 //import IndividualFollower from './individualFollower';
 import { connect } from 'react-redux';
-
+import './mainElementsStyle.css';
 
 class MainFollower extends React.Component {
   
@@ -13,12 +13,12 @@ class MainFollower extends React.Component {
 		  	this.props.addFollowerList(newFollowerList);
 		}
 	    return (
-		    <div>
+		    <div id="singleFollowerDiv">
 			    <img width="200" height="200" src='https://www.sciencemag.org/sites/default/files/styles/article_main_large/public/cat_16x9.jpg?itok=1uV8V4Gl'/><br/>
 			    <br/>
-			    <span>{user.name}</span>
+			    <span id="unameSpan">{user.name}</span>
 			    <br/>
-			    <span>{user.status}</span>
+			    <span id="statusSpan">{user.status}</span>
 			    <br/>
 			    <button id="followerRmBtn" onClick={()=>removeFollower(user.id)}>Unfollow</button>
 			</div>
@@ -35,13 +35,13 @@ class MainFollower extends React.Component {
 	  	    }
 	  	    var newFollowerList = this.props.followers;
 	  	    newFollowerList.push(newFollower);
-	  	    this.setState({followerList:newFollowerList});
+	  	    this.props.addFollowerList([...newFollowerList]);
   	    }
     }
 
     render() {
 	    return (
-	        <div>
+	        <div id="followersDiv">
 	          {this.props.followers.map((person,index) => (
 	          	<this.IndividualFollower key={person.id} user={person} />
 	          ))}

@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import './updateInfo.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class UpdateInfo extends React.Component{
 	constructor(props) {
@@ -89,6 +90,7 @@ class UpdateInfo extends React.Component{
 	    }
 		
 		if (success){
+			this.props.registerUser(Object.assign({},newuser));
 			this.setState({user:newuser});
 			this.props.updateRegisterMsg(updateMsg);
 			this.props.updateRegisterWarning("");
@@ -111,10 +113,15 @@ class UpdateInfo extends React.Component{
 		let pw2U;
 	  	return (
 	    <div>
-	        <div className='rowC'>
-		        <div >
-			        <h3>Current Info</h3>
-				    <table>
+	        <div className='container rowC'>
+		        <div className='container currInfo'>
+				    <table className="table">
+				       <thead>
+					    <tr>
+					      <th scope="col">Items</th>
+					      <th scope="col">Current Info</th>
+					    </tr>
+					   </thead>
 				       <tbody>
 					       <tr>
 					         <td>User Name</td><td>{this.props.user.username}</td>
@@ -134,7 +141,7 @@ class UpdateInfo extends React.Component{
 					     </tbody>
 				    </table>
 			    </div>
-		        <div>
+		        <div className='container updateInfo'>
 				    <table className="table">
 					  <thead>
 					    <tr>
@@ -173,19 +180,18 @@ class UpdateInfo extends React.Component{
 					    </tr>
 					    <tr>
 					    	<td></td>
-					    	<td><button onClick={()=>{this.updateBtnHandler(unameU,dobU,emailU,phoneU,zipcodeU,pw1U,pw2U)}} id="profileUpdateBtn">Update</button></td>
+					    	<td><button className="updateBtn" onClick={()=>{this.updateBtnHandler(unameU,dobU,emailU,phoneU,zipcodeU,pw1U,pw2U)}} id="profileUpdateBtn">Update</button></td>
 					    </tr>
 					  </tbody>
 					</table>
-				</div>
-			</div>
-			<div className="alert alert-success" role="alert" id="successMsg" >
-	             <strong></strong><span id = "successText">{this.props.profileUpdateMsg}</span>
-	        </div>
-	        <br />
-	        <div className="alert alert-warning" role="alert" id="failMsg">
-	             <strong></strong><span id = "failText">{this.props.profileUpdateWarning}</span>
-	        </div>
+                    <div className="alert alert-success" role="alert" id="successMsg" >
+			             <strong></strong><span id = "successText">{this.props.profileUpdateMsg}</span>
+			        </div>
+			        <div className="alert alert-warning" role="alert" id="failMsg">
+			             <strong></strong><span id = "failText">{this.props.profileUpdateWarning}</span>
+			        </div>
+			    </div>
+		    </div>
 		</div>
 		)
 	  }
@@ -203,7 +209,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
     	updateRegisterMsg: (msg)=> dispatch({type:'PROFILE_UPDATE_MSG',msg}),
-    	updateRegisterWarning:(pWarning)=> dispatch({type:'PROFILE_UPDATE_WARNING',pWarning})
+    	updateRegisterWarning:(pWarning)=> dispatch({type:'PROFILE_UPDATE_WARNING',pWarning}),
+    	registerUser: (newUser)=> dispatch({type:'REGISTER_NEW_USER',newUser})
     }
 };
 

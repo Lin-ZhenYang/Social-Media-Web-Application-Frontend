@@ -1,0 +1,97 @@
+#singleFollowerDiv{
+	text-align:center;
+    padding: 5%;
+	background-color:#f1faca;
+	margin:5%;
+	border-radius: 1em;
+	color: #f1faca;
+}
+
+#followersDiv{
+    padding: 2%;
+	background-color:#0b166b;
+	margin:5%;
+	border-radius: 1em;
+	color: #c930a6;
+	text-align:center;
+}
+
+#unameSpan{
+	font-size:2em;
+	font-family: sans-serif, "Helvetica Neue", "Lucida Grande", Arial;
+	color: #e80e1c;
+}
+
+#statusSpan{
+    font-size:1em;
+    font-family: sans-serif, "Helvetica Neue", "Lucida Grande", Arial;
+    color: #4d0fdb;
+}
+
+#followerRmBtn {
+	border: 3px solid #180f40;
+	border-radius: 5px;
+}
+
+#mainUserDiv{
+	padding: 5%;
+	background-color:#c7f0d2;
+	margin:5%;
+	border-radius: 1em;
+	color: #164025;
+	text-align:center;
+}
+
+#mainLogoutBtn{
+    margin-bottom:10px;
+    width: 40%;
+}
+
+#mainProfileBtn{
+    margin-bottom:10px;
+    width: 40%;
+}
+
+.navBtn{
+	background-color: red;
+    width:40%;
+    border:8px outset white;
+    color: white;
+    font-weight: 130;
+    font-size: 1em;
+    margin-bottom: 20px;
+}
+
+#mainNewStatus{
+	border: 3px solid yellow;
+}
+
+#mainStatusUpdBtn{
+	background-color: white;
+	border: 3px solid orange;
+	color: red;
+	font-weight: 800;
+}
+
+#searchDiv{
+	padding: 5%;
+	background-color:#f3f5df;
+	margin:3%;
+	border-radius: 1em;
+	color: #f3f5df;
+	text-align:center;
+	border: 5px dashed #f682fa;
+}
+
+#searchInput{
+	width: 60%;
+	border: 5px solid yellow;
+	border-radius: 5px;
+}
+
+#mainSearchBtn{
+    width: 25%;
+    border: 5px solid orange;
+    border-radius: 5px;
+    font-weight: 800;
+}

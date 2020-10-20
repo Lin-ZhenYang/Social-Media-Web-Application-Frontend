@@ -2,19 +2,41 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { connect } from 'react-redux';
+import "./mainElementsStyle.css"
 
-class searchBar extends React.Component {
+export const SearchBar = ({posts,updateFilteredPosts}) => {
+	const searchHandler =(searchInput) => {
+		let postsCopy =[...posts];
+		searchInput=searchInput.trim();
+		let newFilteredPosts = [];
+		if (searchInput.length>0){
+            newFilteredPosts = postsCopy.filter(function(postCopy){ return postCopy.body.indexOf(searchInput) != -1 });
+            updateFilteredPosts(newFilteredPosts);
+            console.log(newFilteredPosts);
+		} else{
+			updateFilteredPosts(postsCopy);
+		}
 
-  render() {
+	}
     return (
-        <div>
-		    <form>
-		      <input type="text" placeholder="Search Here"></input>
-		      <button id="mainSearchBtn"><FontAwesomeIcon icon={faSearch}/>Search</button>
-		    </form>
+        <div id="searchDiv">
+		    <input id="searchInput" type="text" placeholder="Search Here"></input>
+		    <button id="mainSearchBtn" onClick={()=>{searchHandler(document.getElementById("searchInput").value)}}><FontAwesomeIcon icon={faSearch}/>Search</button>
 		</div>
 		)
-  }
 }
 
-export default searchBar;
+const mapStateToProps = (state) => {
+    return {
+    	posts:state.userPosts,
+        filteredPosts: state.filteredPosts
+    }
+};
+const mapDispatchToProps = (dispatch) => {
+    return {
+        updateFilteredPosts: (posts) => dispatch({type:'FILTERED_POSTS',posts})
+    }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);

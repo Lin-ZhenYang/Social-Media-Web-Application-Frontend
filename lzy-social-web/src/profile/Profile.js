@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import UpdateInfo from "./profileElements/updateInfo";
 import UserPicUpdate from "./profileElements/userPicUpdate";
 import { connect } from 'react-redux';
+import './profile.css';
 
 class Profile extends React.Component{
   constructor(props) {
@@ -15,9 +16,12 @@ class Profile extends React.Component{
   render() {
     return (
       <div >
+        <h1 className="bigHeader">Profile Page</h1><br/>
         <button id="profileMainBtn" onClick={this.onBackMain} >Main Page</button>
         <br/>
-        <UserPicUpdate />
+        <div id='userPic'>
+            <UserPicUpdate />
+        </div>
         <br/>
         <UpdateInfo />
       </div>

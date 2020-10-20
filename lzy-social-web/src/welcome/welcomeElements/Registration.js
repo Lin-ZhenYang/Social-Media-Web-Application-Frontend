@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
+import './loginAndRegisStyle.css';
 
-export const Registration = ({goToMain, registerUser, registerErrorMsg,registerError }) => {
+export const Registration = ({goToMain, registerUser, registerErrorMsg,registerError,addFollowerList,addPosts,initializeFilteredPosts }) => {
   const validateInfo =(uname, dob, email, phone, zipcode, pw1, pw2) => {
 	var warning = "";
 	var success = true;
@@ -103,13 +104,43 @@ export const Registration = ({goToMain, registerUser, registerErrorMsg,registerE
   			email: email.value,
   			phone: phone.value,
   			zipcode: zipcode.value,
-  			password: pw1.value
+  			password: pw1.value,
+  			userid: "1"
   		}
   		registerUser(newUser);
+  		let jsonUsers = fetch("https://jsonplaceholder.typicode.com/users")
+          .then(response => response.json())
+          .then(data => {
+                getFollowerAndPosts(1, data);
+                return true;
+              });
   		goToMain();
-  	} else{
-
-  	}
+  	} 
+  }
+  
+  const getFollowerAndPosts = (uid, userdata) => {
+    let followers =[];
+    let posts=[];
+    uid = parseInt(uid);
+    let i;
+    for (i= uid; i<uid+3; i++){
+      let idx = parseInt(i%userdata.length);
+      let follower = userdata[idx];
+      follower.status = follower.company.catchPhrase;
+      followers.push(follower);
+    }
+    addFollowerList(followers);
+    let fetchPost = fetch("https://jsonplaceholder.typicode.com/posts") .then(response => response.json())
+          .then(data => {
+            posts=data.filter(post => post.userId == uid);
+            let i = 0;
+            for (i;i<posts.length;i++){
+              posts[i].time = "Sun Aug 16 2015 08:37:51 GMT-0500 (Central Daylight Time)";
+            }
+            addPosts(posts);
+            let postsCopy = [...posts];
+            initializeFilteredPosts(postsCopy);
+            });
   }
 
   let unameR;
@@ -180,7 +211,10 @@ const mapDispatchToProps = (dispatch) => {
     return {
         goToMain: ()=> dispatch({type: 'TO_MAIN_PAGE'}),
         registerUser: (newUser)=> dispatch({type:'REGISTER_NEW_USER',newUser}),
-        registerError: (errorMsg)=> dispatch({type:"REGISTER_ERROR",errorMsg})
+        registerError: (errorMsg)=> dispatch({type:"REGISTER_ERROR",errorMsg}),
+        addFollowerList: (followers) => dispatch({type:'ADD_FOLLOWER_LIST',followers}),
+        addPosts: (posts) => dispatch({type:'UPDATE_POSTS',posts}),
+        initializeFilteredPosts: (posts) => dispatch({type:'FILTERED_POSTS',posts}),
     }
 };
 

@@ -1,0 +1,40 @@
+body {
+	background-color: #8fd0f7;
+}
+
+.bigHeader{
+    text-align:center;
+    color:white;
+    font-size: 50px;
+    text-shadow: 0px 4px 3px red,
+                 0px 8px 13px orange,
+                 0px 18px 23px yellow;
+    font-weight:700;
+}
+
+#userPic{
+    background-color: #a8dde0;
+    text-align:center;
+}
+
+.btn{
+	background-color: red;
+    color :white;
+    text-align: center;
+    border-radius:1em;
+    border-color: rgba(252,186,3,1);
+    border-width: 5px;
+    width:15%;
+    margin-top:5px;
+}
+
+#profileMainBtn{
+    background-color: red;
+    width:40%;
+    margin-left:30%;
+    border:8px outset white;
+    color: white;
+    font-weight: 130;
+    font-size: 25px;
+    margin-bottom: 20px;
+}

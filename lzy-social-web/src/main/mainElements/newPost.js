@@ -4,6 +4,7 @@ import './newPost.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faImage } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
+import './newPost.css';
 
 class NewPost extends React.Component {
     constructor(props) {
@@ -28,19 +29,20 @@ class NewPost extends React.Component {
             console.log(posts);
             posts.unshift(newPost);
             this.props.updatePosts(posts);
+            this.props.updateFilteredPosts([...posts]);
         }
     }
     render() {
         return (
-            <div>
+            <div id='newPostDiv'>
                 <h3>Want to post something?</h3>
 		            <div>
-                    <input id="newPostTextInput" type="text" placeholder="Enter text for new post here: " /><br/>
+                    <textarea id="newPostTextInput" type="text" placeholder="Enter text for new post here: " /><br/>
                     <span><FontAwesomeIcon icon={faImage}/>Upload Picture Here: </span><input id="newPostImageInput" type="file"/>
                 </div><br />
                     <div className='flexrow'>
-                    <button id="newPostClearBtn" onClick={()=>{this.onCancelHandler()}}>Cancel</button>
-                    <button id="newPostPostBtn" onClick={()=>{this.onPostHandler(document.getElementById("newPostTextInput").value)}} >Post</button>
+                    <button className="newPostBtn" id="newPostClearBtn" onClick={()=>{this.onCancelHandler()}}>Cancel</button>
+                    <button className="newPostBtn" id="newPostPostBtn" onClick={()=>{this.onPostHandler(document.getElementById("newPostTextInput").value)}} >Post</button>
                 </div>
 		        </div>
 		  )
@@ -55,7 +57,8 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => {
     return {
-        updatePosts: (posts) => dispatch({type:'UPDATE_POSTS',posts})
+        updatePosts: (posts) => dispatch({type:'UPDATE_POSTS',posts}),
+        updateFilteredPosts: (posts) => dispatch({type:'FILTERED_POSTS',posts})
     } 
 };
 

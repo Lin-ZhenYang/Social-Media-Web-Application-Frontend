@@ -7,12 +7,16 @@ class Welcome extends React.Component {
     render() {
         return (
           <div>
-              <h1>welcomepage</h1>
-              <div  className='rowC'>
-                  <Login />
-                  <Registration />
+              <h1 className="bigHeader">Welcome to HTX Social Club</h1>
+              <div  className='container rowC'>
+                  <div id="loginSection" className = 'container'>
+                      <Login />
+                  </div>
+                  <div id="regisSection" className = 'container'>
+                      <Registration />
+                  </div>
               </div>
-            </div>
+          </div>
         );
     }
 }

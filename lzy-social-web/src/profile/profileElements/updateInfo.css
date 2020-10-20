@@ -1,6 +1,62 @@
 .rowC{
-  display:flex;
-  flex-direction:row;
-  background-color: pink;
-  justify-content: center;
+    display:flex;
+    flex-direction:row;
+    background-color: pink;
+    justify-content: center;
+    margin: 5%;
+    border: 5px solid white;
+    border-radius: 15px;
+}
+
+.currInfo{
+    background-color: #ffffcc;
+    width: 35%;
+    margin: 5%;
+    right-margin: 10%;
+    border: 5px solid white;
+    border-radius: 15px;
+}
+
+.updateInfo{
+    background-color: #f2f2f2;
+    width: 55%;
+    margin: 5%;
+    border: 5px solid white;
+    border-radius: 15px;
+}
+
+.updateBtn{
+	background-color: red;
+	color :white;
+	text-align: center;
+	border-radius:1em;
+	border-color: rgba(252,186,3,1);
+	border-width: 5px;
+	width:75%;
+}
+
+#profilePicDiv{
+    padding:20px;
+}
+
+#profilePicUpload{
+    background-color: red;
+    color :white;
+    text-align: center;
+    border-radius:1em;
+    border-color: rgba(252,186,3,1);
+    border-width: 5px;
+    width:30%;
+    margin-top:5px;
+}
+
+#profilePicUpBtn{
+    margin-top:5px;
+    background-color: red;
+    color :white;
+    text-align: center;
+    border-radius:1em;
+    border-color: rgba(252,186,3,1);
+    border-width: 5px;
+    width:30%;
 }

@@ -1,4 +1,4 @@
-# hw4-Lin-ZhenYang
-hw4-Lin-ZhenYang created by GitHub Classroom
-
-I am using 4 slip days. Not finished yet. I'll submit on Monday.
+{ 
+    "netid": "zl89",
+    "site": "http://lzy-comp531-hw4.surge.sh/"
+}

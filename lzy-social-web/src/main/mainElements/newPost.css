@@ -1,5 +1,58 @@
 .flexrow{
-  display:flex;
-  flex-direction:row;
-  justify-content: center;
+    display:flex;
+    flex-direction:row;
+    justify-content: center;
+}
+
+
+#newPostTextInput{
+	width: 100%;
+	height: 100px;
+	background-color:#f2f5d5;
+	border: 3px solid yellow;
+}
+
+.newPostBtn{
+	margin-top:5px;
+    background-color: red;
+    color :white;
+    text-align: center;
+    border-radius:1em;
+    border-color: rgba(252,186,3,1);
+    border-width: 5px;
+    width:30%;
+}
+
+#newPostDiv{
+	padding: 5%;
+	background-color:#c7f0d2;
+	margin:5%;
+	border-radius: 1em;
+	color: #c930a6;
+}
+
+#postsDiv{
+	padding: 5%;
+	background-color:#c7f0d2;
+	margin:5%;
+	border-radius: 1em;
+	color: #164025;
+}
+
+#eachPostDiv{
+	padding: 5%;
+	background-color:#fcf7c7;
+	margin:5%;
+	border-radius: 1em;
+	color: #1f1d12;
+	font-weight: 400;
+	text-align:center;
+}
+
+
+#editBtn,#commentBtn{
+	width: 30%;
+	border: 4px solid white;
+	font-weight: 600;
+	background-color: #b5f5f5;
 }
