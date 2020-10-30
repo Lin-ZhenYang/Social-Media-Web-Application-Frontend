@@ -7,7 +7,8 @@ const initialState = {
     loginErrorMsg:"",
     followerList:[],
     userPosts:[],
-    filteredPosts:[]
+    filteredPosts:[],
+    headlines:[]
 };
 
 const Reducer = ( state=initialState,action) => {
@@ -34,7 +35,9 @@ const Reducer = ( state=initialState,action) => {
             return {...state, userPosts: action.posts}
         case 'FILTERED_POSTS':
             return {...state, filteredPosts: action.posts}
-        default:
+        case 'UPDATE_HEADLINE':
+            return {...state, headlines: action.newHeadlines}
+        default: 
             return state;
     }
 }

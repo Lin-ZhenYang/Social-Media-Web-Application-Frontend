@@ -1,4 +1,1 @@
-{ 
-    "netid": "zl89",
-    "site": "http://lzy-comp531-hw4.surge.sh/"
-}
+using 1 slip day (1/5)

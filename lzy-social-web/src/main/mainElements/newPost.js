@@ -23,7 +23,10 @@ class NewPost extends React.Component {
                 userId: this.props.user.userid,
                 id: 1000,
                 body: postText,
-                time: Date().toLocaleString()
+                time: Date().toLocaleString(),
+                username:this.props.user.username,
+                comments:[]
+
             }
             let posts = [...this.props.posts];
             console.log(posts);

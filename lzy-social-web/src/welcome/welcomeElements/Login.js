@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import './loginAndRegisStyle.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-export const Login = ({goToMain, updateErrorMsg, loginErrorMsg,registerUser,addFollowerList,addPosts,initializeFilteredPosts}) => {
+export const Login = ({goToMain, updateErrorMsg, loginErrorMsg,registerUser,addFollowerList,addPosts,initializeFilteredPosts,updateHeadlines,headlines}) => {
   let loginUname;
   let loginPw;
   let loginError;
@@ -35,7 +35,12 @@ export const Login = ({goToMain, updateErrorMsg, loginErrorMsg,registerUser,addF
                   userid: user.id
                 }
                 registerUser(newUser);
-                getFollowerAndPosts(user.id, data);
+                let newHeadlines = headlines;
+                if (!headlines[user.username]){
+                  newHeadlines[user.username] = user.company.catchPhrase;
+                  updateHeadlines(Object.assign({},newHeadlines));  
+                }
+                getFollowerAndPosts(user.id, data,user.username);
                 goToMain();
                 return true;
               }
@@ -48,7 +53,7 @@ export const Login = ({goToMain, updateErrorMsg, loginErrorMsg,registerUser,addF
     return true;
   }
   
-  const getFollowerAndPosts = (uid, userdata) => {
+  const getFollowerAndPosts = (uid, userdata,uname) => {
     let followers =[];
     let posts=[];
     uid = parseInt(uid);
@@ -66,7 +71,47 @@ export const Login = ({goToMain, updateErrorMsg, loginErrorMsg,registerUser,addF
             let i = 0;
             for (i;i<posts.length;i++){
               posts[i].time = "Sun Aug 16 2015 08:37:51 GMT-0500 (Central Daylight Time)";
+              posts[i].username = uname;
+              posts[i].comments = [{author:"MANGO",content:"Fake Comment!"},{author:"DVA",content:"LOL"}];
+
             }
+
+            let postsF=[];
+            postsF=data.filter(post => post.userId == followers[0].id);
+            i = 0;
+            for (i;i<postsF.length;i++){
+              postsF[i].time = "Mon Aug 03 2020 01:27:52 GMT-0500 (Central Daylight Time)";
+              postsF[i].username = followers[0].username;
+              postsF[i].comments = [{author:"MANGO",content:"Fake Comment!"},{author:"DVA",content:"LOL"}];
+              
+            }
+            Array.prototype.push.apply(posts,postsF); 
+
+            postsF=data.filter(post => post.userId == followers[1].id);
+            i = 0;
+            for (i;i<postsF.length;i++){
+              postsF[i].time = "Wed Oct 17 2018 13:17:52 GMT-0500 (Central Daylight Time)";
+              postsF[i].username = followers[1].username;
+              postsF[i].comments = [{author:"MANGO",content:"Fake Comment!"},{author:"DVA",content:"LOL"}];
+             
+            }
+            Array.prototype.push.apply(posts,postsF); 
+
+            postsF=data.filter(post => post.userId == followers[2].id);
+            i = 0;
+            for (i;i<postsF.length;i++){
+              postsF[i].time = "Sun Sep 13 2020 11:31:21 GMT-0500 (Central Daylight Time)";
+              postsF[i].username = followers[2].username;
+              postsF[i].comments = [{author:"MANGO",content:"Fake Comment!"},{author:"DVA",content:"LOL"}];
+              
+            }
+            Array.prototype.push.apply(posts,postsF); 
+
+            posts.sort(function(a,b){
+              return new Date(b.time) - new Date(a.time);
+            });
+
+
             addPosts(posts);
             let postsCopy = [...posts];
             initializeFilteredPosts(postsCopy);
@@ -104,7 +149,8 @@ export const Login = ({goToMain, updateErrorMsg, loginErrorMsg,registerUser,addF
 
 const mapStateToProps = (state) => {
     return {
-        loginErrorMsg: state.loginErrorMsg
+        loginErrorMsg: state.loginErrorMsg,
+        headlines: state.headlines
     }
 };
 const mapDispatchToProps = (dispatch) => {
@@ -115,6 +161,7 @@ const mapDispatchToProps = (dispatch) => {
         addFollowerList: (followers) => dispatch({type:'ADD_FOLLOWER_LIST',followers}),
         addPosts: (posts) => dispatch({type:'UPDATE_POSTS',posts}),
         initializeFilteredPosts: (posts) => dispatch({type:'FILTERED_POSTS',posts}),
+        updateHeadlines: (newHeadlines) => dispatch({type:'UPDATE_HEADLINE',newHeadlines})
     }
 };
 

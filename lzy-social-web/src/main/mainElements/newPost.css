@@ -56,3 +56,10 @@
 	font-weight: 600;
 	background-color: #b5f5f5;
 }
+
+#showHideCommentBtn{
+	width: 60%;
+	border: 4px solid white;
+	font-weight: 600;
+	background-color: #1375ed;
+}

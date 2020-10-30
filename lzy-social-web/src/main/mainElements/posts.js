@@ -7,12 +7,26 @@ import './newPost.css';
 class Posts extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            commentDisplay: "block",
+        };
     }
+    
+    
 
     IndividualPost = ({post}) => {
+    	
+    	this.handleShowHide = () =>{
+    		if(this.state.commentDisplay=="block"){
+    			this.setState({commentDisplay:"none"});
+    		} else{
+                this.setState({commentDisplay:"block"});
+    		}
+    	}
+
         return (
 	        <div id='eachPostDiv'>
-	            <span>Author: {this.props.user.username}</span><br/>
+	            <span>Author: {post.username}</span><br/>
 	            <span>Time : {post.time}</span><br/>
 		        <img width="200" height="200" src='https://www.nationalgeographic.com/content/dam/news/2018/05/17/you-can-train-your-cat/02-cat-training-NationalGeographic_1484324.ngsversion.1526587209178.adapt.1900.1.jpg'/><br/>
 	            <br/>
@@ -20,6 +34,15 @@ class Posts extends React.Component {
 	            <br/>
 	            <button id='editBtn'>Edit</button>
 	            <button id='commentBtn'>Comment</button>
+	            <br/>
+	            <button id='showHideCommentBtn' onClick={()=>{this.handleShowHide()}}>Show/Hide Comments</button>
+	            <div id="commentSection" style={{display: this.state.commentDisplay}}>
+	                {post.comments.map(comment => {
+	                	return (
+	                		<li>{comment.author} :  {comment.content}</li>
+	                    );
+	                })}
+	            </div>
 			</div>
 		)
     }
