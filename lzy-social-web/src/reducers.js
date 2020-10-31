@@ -37,6 +37,8 @@ const Reducer = ( state=initialState,action) => {
             return {...state, filteredPosts: action.posts}
         case 'UPDATE_HEADLINE':
             return {...state, headlines: action.newHeadlines}
+        case 'LOG_OUT':
+            return {...state,user:{}}
         default: 
             return state;
     }

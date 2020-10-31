@@ -11,7 +11,7 @@ export const Login = ({goToMain, updateErrorMsg, loginErrorMsg,registerUser,addF
   let loginUname;
   let loginPw;
   let loginError;
-
+  
   const onLogin = (uname,pw) => {
     loginError = "";
     if (!uname || !pw ||!uname.value || !uname.value){

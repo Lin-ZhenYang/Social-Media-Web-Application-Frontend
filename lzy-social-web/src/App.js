@@ -1,8 +1,8 @@
 import React from 'react';
 import './App.css';
 import Welcome from './welcome/welcome';
-import Main from './main/main';
-import Profile from './profile/profile';
+import Main from './main/Main';
+import Profile from './profile/Profile';
 import { connect } from 'react-redux';
 
 const App = ({location}) => {

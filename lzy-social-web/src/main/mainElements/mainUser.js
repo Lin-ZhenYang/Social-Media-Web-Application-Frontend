@@ -9,6 +9,7 @@ class MainUser extends React.Component{
     }
     onLogout = () => {
       this.props.goToWelcome();
+      this.props.logOut();
     }
 
     onProfile = () => {
@@ -49,7 +50,8 @@ const mapDispatchToProps = (dispatch) => {
     return {
         goToWelcome: ()=> dispatch({type: 'TO_WELCOME_PAGE'}),
         goToProfile: ()=> dispatch({type: 'TO_PROFILE_PAGE'}),
-        updateHeadlines: (newHeadlines) => dispatch({type:'UPDATE_HEADLINE',newHeadlines})
+        updateHeadlines: (newHeadlines) => dispatch({type:'UPDATE_HEADLINE',newHeadlines}),
+        logOut: ()=> dispatch({type: 'LOG_OUT'})
     }
 };
 
