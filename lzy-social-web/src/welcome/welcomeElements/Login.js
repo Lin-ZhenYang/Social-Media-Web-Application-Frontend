@@ -13,6 +13,17 @@ export const Login = ({goToMain, updateErrorMsg, loginErrorMsg,registerUser,addF
   let loginError;
   
   const onLogin = (uname,pw) => {
+  	//random codes for ic
+  	fetch("http://localhost:8000/login", {
+  		method:"POST",
+  		headers:{'Content-Type': 'application/json'},
+  		body:JSON.stringify({
+  			username:"uname101",
+  			password:"pwd101"
+  		}),
+  		credentials:"include"
+  	}).then(res=>console.log(res));
+  	//random codes for ic end
     loginError = "";
     if (!uname || !pw ||!uname.value || !uname.value){
       loginError = "Username and password should not be empty.";
