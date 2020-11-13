@@ -1,1 +1,5 @@
-{ "netid": "zl89", "site": "http://lzy-comp531-hw5.surge.sh/" }
+{ "netid": "zl89", 
+"frontend": "http://lzy-hw6-frontend.surge.sh/",
+"backend": "https://lzy-social-backend.herokuapp.com/",
+"backendUser":"testUser",
+"backendUserPassword","123" }
