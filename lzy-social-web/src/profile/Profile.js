@@ -12,6 +12,8 @@ class Profile extends React.Component{
 
   onBackMain = () => {
     this.props.goToMain();
+    this.props.updateRegisterWarning("");
+    this.props.updateRegisterMsg("");
   }
   render() {
     return (
@@ -38,7 +40,9 @@ const mapStateToProps = (state) => {
 };
 const mapDispatchToProps = (dispatch) => {
     return {
-        goToMain: ()=> dispatch({type: 'TO_MAIN_PAGE'})
+        goToMain: ()=> dispatch({type: 'TO_MAIN_PAGE'}),
+        updateRegisterWarning:(pWarning)=> dispatch({type:'PROFILE_UPDATE_WARNING',pWarning}),
+        updateRegisterMsg: (msg)=> dispatch({type:'PROFILE_UPDATE_MSG',msg})
     }
 };
 

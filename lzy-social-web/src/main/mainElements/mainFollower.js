@@ -7,63 +7,75 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 class MainFollower extends React.Component {
   
-    IndividualFollower = ({user}) => {
-		const  removeFollower = (uid) => {
+    IndividualFollower = ({username,headline}) => {
+		const  removeFollower = (username) => {
 		  	var newFollowerList = this.props.followers;
-		  	newFollowerList = newFollowerList.filter(follower => follower.id!=uid);
-            this.removePosts(uid);
-		  	this.props.addFollowerList(newFollowerList);
+		  	newFollowerList = newFollowerList.filter(follower => follower!=username);
+            this.props.addFollowerList(newFollowerList);
+            let deleteFollowerUrl = "http://localhost:8000/following/"+username;
+            let deletePram={
+              headers:{"content-type":"application/json"},
+              method:"DELETE",
+              credentials:"include"
+            };
+            fetch(deleteFollowerUrl,deletePram);
+            let newPosts=[];
+            newPosts=this.props.posts.filter(post => post.author != username);
+            this.props.updatePosts(newPosts);
+            this.props.updateFilteredPosts([...newPosts]);
 		}
 	    return (
 		    <div id="singleFollowerDiv">
 			    <img width="200" height="200" src='https://www.sciencemag.org/sites/default/files/styles/article_main_large/public/cat_16x9.jpg?itok=1uV8V4Gl'/><br/>
 			    <br/>
-			    <span id="unameSpan">{user.name}</span>
+			    <span id="unameSpan">{username}</span>
 			    <br/>
-			    <span id="statusSpan">{user.status}</span>
+			    <span id="statusSpan">{headline}</span>
 			    <br/>
-			    <button id="followerRmBtn" onClick={()=>removeFollower(user.id)}>Unfollow</button>
+			    <button id="followerRmBtn" onClick={()=>removeFollower(username)}>Unfollow</button>
 			</div>
 		)
 
     }
 
-    removePosts = (uid) => {
-    	let newPosts=[];
-    	newPosts=this.props.posts.filter(post => post.userId != uid);
-        this.props.updatePosts(newPosts);
-        this.props.updateFilteredPosts([...newPosts]);
-    }
-
     async addFollower(newFollower){
   	    newFollower = newFollower.trim();
-	    if (newFollower.length>0){
-	    	let validFollower = await this.checkValidFollower(newFollower);
-	  		if (validFollower){
-  		    	var newFollowerList = this.props.followers;
-		  	    newFollowerList.push(validFollower);
-		  	    this.props.addFollowerList([...newFollowerList]);
-		  	    this.addNewFollowerPosts(validFollower.id,validFollower.username);
-		  	    document.getElementById("addFailText").innerHTML = "New following added!";
-	  		} else{
-	  			document.getElementById("addFailText").innerHTML = "User does not exist!";
-	  		}
-  	    }
-    }
-
-    async checkValidFollower(newFollower){
-    	let found = await fetch("https://jsonplaceholder.typicode.com/users")
-            .then(response => response.json())
-            .then(data => {
-                for (var user of data){
-                    if (user.username==newFollower){ 
-                    	user["status"]= user.company.catchPhrase;
-                        return user;     
+        if (newFollower.length>0){
+            if (this.props.followers.includes(newFollower)){
+                document.getElementById("addFailText").innerHTML = "Already followed!";
+                console.log(this.props.followers);
+            } else if (newFollower == this.props.user.username) {
+                document.getElementById("addFailText").innerHTML = "Can't follow yourself!";
+            } else {
+                let addFollowerUrl = "http://localhost:8000/following/"+newFollower;
+                let putPram={
+                  headers:{"content-type":"application/json"},
+                  method:"PUT",
+                  credentials:"include"
+                };
+                await fetch(addFollowerUrl,putPram).then(response => response.json()).
+                then(data => {
+                    if (data.notfound && data.notfound=="notfound"){
+                        document.getElementById("addFailText").innerHTML = "User "+newFollower+" does not exist!";
+                    } else if (data.following) {
+                        let updatedFollowers = data.following;
+                        this.props.addFollowerList(updatedFollowers);
+                        document.getElementById("addFailText").innerHTML = "User "+newFollower+" followed!";
+                        let followerPostsUrl = "http://localhost:8000/articles/"+newFollower;
+                        fetch(followerPostsUrl,{credentials:"include"}).then(response => response.json()).
+                        then(data => {
+                            let updatedPosts = this.props.posts;
+                            updatedPosts = updatedPosts.concat(data.articles);
+                            updatedPosts.sort(function(a,b){
+                              return new Date(b.date) - new Date(a.date);
+                            });
+                            this.props.updatePosts([...updatedPosts]);
+                            this.props.updateFilteredPosts([...updatedPosts]);
+                        });
                     }
-                }
-                return false;
-        });
-        return found;
+                });
+            }
+        }
     }
 
     addNewFollowerPosts = (uid,uname) => {
@@ -91,7 +103,7 @@ class MainFollower extends React.Component {
 	    return (
 	        <div id="followersDiv">
 	          {this.props.followers.map((person,index) => (
-	          	<this.IndividualFollower key={person.id} user={person} />
+	          	<this.IndividualFollower key={person.id} username={person} headline={this.props.headlines[person]} />
 	          ))}
 	          <br/>
 	          <input id="newFollowerInput"></input>
@@ -109,7 +121,8 @@ const mapStateToProps = (state) => {
     return {
         user: state.user,
         followers: state.followerList,
-        posts:state.userPosts
+        posts:state.userPosts,
+        headlines: state.headlines
     }
 };
 const mapDispatchToProps = (dispatch) => {

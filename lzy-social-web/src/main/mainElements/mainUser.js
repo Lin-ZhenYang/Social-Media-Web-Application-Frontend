@@ -10,6 +10,8 @@ class MainUser extends React.Component{
     onLogout = () => {
       this.props.goToWelcome();
       this.props.logOut();
+      this.props.registerError("");
+      this.props.updateErrorMsg("");
     }
 
     onProfile = () => {
@@ -18,9 +20,17 @@ class MainUser extends React.Component{
     onUpdate = (newStatus) => {    
       if (newStatus){
         let newHeadlines = this.props.headlines;
-        console.log(newHeadlines,"ssss");
         newHeadlines[this.props.user.username] = newStatus;
         this.props.updateHeadlines(Object.assign({},newHeadlines));  
+        let headlineUrl = "http://localhost:8000/headline";
+        let headlineData = {"headline":newStatus};
+        let putPram={
+              headers:{"content-type":"application/json"},
+              body:JSON.stringify(headlineData),
+              method:"PUT",
+              credentials:"include"
+            };
+        fetch(headlineUrl,putPram);
       } 
     }
     render(){
@@ -51,7 +61,9 @@ const mapDispatchToProps = (dispatch) => {
         goToWelcome: ()=> dispatch({type: 'TO_WELCOME_PAGE'}),
         goToProfile: ()=> dispatch({type: 'TO_PROFILE_PAGE'}),
         updateHeadlines: (newHeadlines) => dispatch({type:'UPDATE_HEADLINE',newHeadlines}),
-        logOut: ()=> dispatch({type: 'LOG_OUT'})
+        logOut: ()=> dispatch({type: 'LOG_OUT'}),
+        updateErrorMsg: (loginError) => dispatch({type:'LOGIN_ERROR',loginError}),
+        registerError: (errorMsg)=> dispatch({type:"REGISTER_ERROR",errorMsg})
     }
 };
 

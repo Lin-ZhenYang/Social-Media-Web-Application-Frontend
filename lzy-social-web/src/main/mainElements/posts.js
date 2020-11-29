@@ -16,35 +16,35 @@ class Posts extends React.Component {
 
     IndividualPost = ({post}) => {
     	
-    	this.handleShowHide = () =>{
-    		if(this.state.commentDisplay=="block"){
-    			this.setState({commentDisplay:"none"});
+    	this.handleShowHide = (postId) =>{
+    		if(document.getElementById(postId).style.display=="block"){
+    			document.getElementById(postId).style.display="none";
     		} else{
-                this.setState({commentDisplay:"block"});
+                document.getElementById(postId).style.display="block";
     		}
     	}
 
         return (
 	        <div id='eachPostDiv'>
-	            <span>Author: {post.username}</span><br/>
-	            <span>Time : {post.time}</span><br/>
+	            <span>Author: {post.author}</span><br/>
+	            <span>Time : {post.date.substring(0,10)} {post.date.substring(11,19)} </span><br/>
 		        <img width="200" height="200" src='https://www.nationalgeographic.com/content/dam/news/2018/05/17/you-can-train-your-cat/02-cat-training-NationalGeographic_1484324.ngsversion.1526587209178.adapt.1900.1.jpg'/><br/>
 	            <br/>
-	            <span>{post.body}</span>
+	            <span>{post.text}</span>
 	            <br/>
 	            <button id='editBtn'>Edit</button>
 	            <button id='commentBtn'>Comment</button>
 	            <br/>
-	            <button id='showHideCommentBtn' onClick={()=>{this.handleShowHide()}}>Show/Hide Comments</button>
-	            <div id="commentSection" style={{display: this.state.commentDisplay}}>
+	            <button id='showHideCommentBtn' onClick={()=>{this.handleShowHide(post._id)}}>Show/Hide Comments</button>
+	            <div id={post._id} style={{display: "block"}}>
 	                {post.comments.map(comment => {
 	                	return (
-	                		<li>{comment.author} :  {comment.content}</li>
+	                		<li>{comment.author} :  {comment.body}</li>
 	                    );
 	                })}
 	            </div>
 			</div>
-		)
+		);
     }
 
     render() {

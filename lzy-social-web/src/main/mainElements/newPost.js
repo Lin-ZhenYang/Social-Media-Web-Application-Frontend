@@ -19,20 +19,30 @@ class NewPost extends React.Component {
     onPostHandler = (postText)=>{
         postText = postText.trim();
         if (postText.length>0){
-            var newPost ={
-                userId: this.props.user.userid,
-                id: 1000,
-                body: postText,
-                time: Date().toLocaleString(),
-                username:this.props.user.username,
-                comments:[]
-
+            let postBody = {
+                text: postText
             }
-            let posts = [...this.props.posts];
-            console.log(posts);
-            posts.unshift(newPost);
-            this.props.updatePosts(posts);
-            this.props.updateFilteredPosts([...posts]);
+            let articlePostUrl = "http://localhost:8000/article";
+            let postPram ={
+                headers:{"content-type":"application/json"},
+                body:JSON.stringify(postBody),
+                method:"POST",
+                credentials:"include"
+            }
+            fetch(articlePostUrl,postPram).then(response => response.json()).
+            then(data => {
+                var newPost ={
+                    _id: data.articles[0]._id,
+                    text: postText,
+                    date: (new Date()).toISOString(),
+                    author:this.props.user.username,
+                    comments:[]
+                };
+                let posts = [...this.props.posts];
+                posts.unshift(newPost);
+                this.props.updatePosts(posts);
+                this.props.updateFilteredPosts([...posts]);
+            });
         }
     }
     render() {

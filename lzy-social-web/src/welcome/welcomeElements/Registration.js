@@ -97,25 +97,31 @@ export const Registration = ({goToMain, registerUser, registerErrorMsg,registerE
 
   const submitBtnHandler = (uname,dobInput,emailInput,phoneInput,zipcodeInput,pw1,pw2) => {
   	if (validateInfo(uname,dobInput,emailInput,phoneInput,zipcodeInput,pw1,pw2)){
-  		let jsonUsers = fetch("https://jsonplaceholder.typicode.com/users")
-          .then(response => response.json())
-          .then(data => {
-                for (var user of data){
-	              if (user.username==uname.value){
-	              	registerError("User already exists! Try another username. ");
-	              	return false;
-	              }
-	            }
-	            let newUser = {
-	                  username: uname.value,
-	                  dob: dobInput.value,
-	                  email: emailInput.value,
-	                  phone:phoneInput.value,
-	                  zipcode: zipcodeInput.value,
-	                  password: pw1.value
-	                }
-	            registerUser(newUser);
-        });
+  		const regisUrl = "http://localhost:8000/register";
+	    let newUser = {
+          username: uname.value,
+          dob: dobInput.value,
+          email: emailInput.value,
+          phone:phoneInput.value,
+          zipcode: zipcodeInput.value,
+          password: pw1.value
+        }
+        let otherPram={
+        	headers:{"content-type":"application/json"},
+        	body:JSON.stringify(newUser),
+        	method:"POST",
+        	credentials:"include"
+        }
+        fetch(regisUrl,otherPram).then(response => response.json()).then(
+        	data => {
+        		if (data.result == "user existed"){
+        			registerError("User already exists! Try another username. ");
+        			return false;
+        		} else{
+        			registerError("User " + data.username+" registered!");
+        			return false;
+        		}
+        	});
   	} 
   }
   

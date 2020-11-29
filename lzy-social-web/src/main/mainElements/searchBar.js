@@ -11,7 +11,7 @@ export const SearchBar = ({posts,updateFilteredPosts}) => {
 		searchInput=searchInput.trim();
 		let newFilteredPosts = [];
 		if (searchInput.length>0){
-            newFilteredPosts = postsCopy.filter(function(postCopy){ return postCopy.body.indexOf(searchInput) != -1 });
+            newFilteredPosts = postsCopy.filter(function(postCopy){ return (postCopy.text.indexOf(searchInput) != -1) || (postCopy.author.indexOf(searchInput)!=-1) });
             updateFilteredPosts(newFilteredPosts);
             console.log(newFilteredPosts);
 		} else{

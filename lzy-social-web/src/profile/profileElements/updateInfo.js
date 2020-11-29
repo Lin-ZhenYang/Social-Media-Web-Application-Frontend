@@ -16,16 +16,17 @@ class UpdateInfo extends React.Component{
 		var warning = "";
 		var success = true;
 	    var newuser  = this.props.user;
-	    if (uname && uname.value.length!=0){
-	    	var unameReg=/^([a-zA-Z]{1})([a-zA-Z0-9]{1})+$/;
-	    	if (!uname.value.match(unameReg)){
-	    		warning += "Wrong user name format: only letters and numbers allowed. First character has to be letter. ";
-	    		success=false;
-	    	} else{
-	    		updateMsg+="Username updated. ";
-	    		newuser.username = uname.value;
-	    	}
-	    }
+
+	    // if (uname && uname.value.length!=0){
+	    // 	var unameReg=/^([a-zA-Z]{1})([a-zA-Z0-9]{1})+$/;
+	    // 	if (!uname.value.match(unameReg)){
+	    // 		warning += "Wrong user name format: only letters and numbers allowed. First character has to be letter. ";
+	    // 		success=false;
+	    // 	} else{
+	    // 		updateMsg+="Username updated. ";
+	    // 		newuser.username = uname.value;
+	    // 	}
+	    // }
 	    
 	    if (dob && dob.value.length!=0){
 	    	var dobInput = dob.value;
@@ -36,6 +37,15 @@ class UpdateInfo extends React.Component{
 			} else{
 	    		updateMsg+="Date of birth updated. ";
 	    		newuser.dob = dob.value;
+	    		let dobUrl = "http://localhost:8000/dob";
+	    		let dobData = {"dob":dob.value};
+	    		let putPram={
+		          headers:{"content-type":"application/json"},
+		          body:JSON.stringify(dobData),
+		          method:"PUT",
+		          credentials:"include"
+		        };
+	    		fetch(dobUrl,putPram);
 	    	}
 	    }
 
@@ -45,7 +55,16 @@ class UpdateInfo extends React.Component{
 				success = false;
 			} else{
 	    		updateMsg+="Email updated. ";
-	    		newuser.eamil = email.value;
+	    		newuser.email = email.value;
+	    		let emailUrl = "http://localhost:8000/email";
+	    		let emailData = {"email":email.value};
+	    		let putPram={
+		          headers:{"content-type":"application/json"},
+		          body:JSON.stringify(emailData),
+		          method:"PUT",
+		          credentials:"include"
+		        };
+	    		fetch(emailUrl,putPram);
 	    	}
 		}
 	    
@@ -60,6 +79,15 @@ class UpdateInfo extends React.Component{
 			} else{
 	    		updateMsg+="Phone number updated. ";
 	    		newuser.phone = phone.value;
+	    		let phoneUrl = "http://localhost:8000/phone";
+	    		let phoneData = {"phone":phone.value};
+	    		let putPram={
+		          headers:{"content-type":"application/json"},
+		          body:JSON.stringify(phoneData),
+		          method:"PUT",
+		          credentials:"include"
+		        };
+	    		fetch(phoneUrl,putPram);
 	    	}
 		}
 
@@ -73,6 +101,15 @@ class UpdateInfo extends React.Component{
 			} else{
 	    		updateMsg+="Zipcode updated. ";
 	    		newuser.zipcode = zipcode.value;
+	    		let zipcodeUrl = "http://localhost:8000/zipcode";
+	    		let zipcodeData = {"zipcode":zipcode.value};
+	    		let putPram={
+		          headers:{"content-type":"application/json"},
+		          body:JSON.stringify(zipcodeData),
+		          method:"PUT",
+		          credentials:"include"
+		        };
+	    		fetch(zipcodeUrl,putPram);
 	    	}
 		}
 	   
@@ -85,13 +122,21 @@ class UpdateInfo extends React.Component{
 			} else{
 	    		updateMsg+="Password updated. ";
 	    		newuser.password = pw1.value;
+	    		let pwUrl = "http://localhost:8000/password";
+	    		let pwData = {"password":pw1.value};
+	    		let putPram={
+		          headers:{"content-type":"application/json"},
+		          body:JSON.stringify(pwData),
+		          method:"PUT",
+		          credentials:"include"
+		        };
+	    		fetch(pwUrl,putPram);
 
 	    	}
 	    }
 		
 		if (success){
 			this.props.registerUser(Object.assign({},newuser));
-			this.setState({user:newuser});
 			this.props.updateRegisterMsg(updateMsg);
 			this.props.updateRegisterWarning("");
 			return true;
@@ -152,7 +197,7 @@ class UpdateInfo extends React.Component{
 					  <tbody>
 					  	<tr>
 					      <th scope="row">User Name</th>
-					      <td><input type="text" ref={(ele)=>unameU = ele} name="unameUpd" id="unameUpd" ></input></td>
+					      <td><input type="text" ref={(ele)=>unameU = ele} name="unameUpd" id="unameUpd" disabled></input></td>
 					    </tr>
 					    <tr>
 					      <th scope="row">Date of Birth</th>
