@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import './loginAndRegisStyle.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-export const Login = ({goToMain, updateErrorMsg, loginErrorMsg,registerUser,addFollowerList,addPosts,initializeFilteredPosts,updateHeadlines,headlines}) => {
+export const Login = ({goToMain, updateErrorMsg, loginErrorMsg,registerUser,addFollowerList,addPosts,initializeFilteredPosts,updateHeadlines,headlines,avatars,updateAvatars}) => {
   let loginUname;
   let loginPw;
   let loginError;
@@ -53,11 +53,13 @@ export const Login = ({goToMain, updateErrorMsg, loginErrorMsg,registerUser,addF
       let zipcode;
       let status;
       let userid;
+      let avatar;
 
       dob = await fetch ("http://localhost:8000/dob",{credentials:"include"}).then(response => response.json()).
       then(data => {
-        username = data.username;
-        return data.dob;});
+          username = data.username;
+          return data.dob;
+      });
       email = await fetch ("http://localhost:8000/email",{credentials:"include"}).then(response => response.json()).
       then(data => {return data.email;});
       phone = await fetch ("http://localhost:8000/phone",{credentials:"include"}).then(response => response.json()).
@@ -66,14 +68,16 @@ export const Login = ({goToMain, updateErrorMsg, loginErrorMsg,registerUser,addF
       then(data => {return data.zipcode;});
       status = await fetch ("http://localhost:8000/headline",{credentials:"include"}).then(response => response.json()).
       then(data => {return data.headline;});
-
+      avatar = await fetch ("http://localhost:8000/avatar",{credentials:"include"}).then(response => response.json()).
+      then(data => {return data.avatar;});
       let newUser = {
         username: username,
         dob: dob,
         email: email,
         phone: phone,
         zipcode: zipcode,
-        status: status
+        status: status,
+        avatar: avatar
       }
       registerUser(newUser);
 
@@ -84,26 +88,31 @@ export const Login = ({goToMain, updateErrorMsg, loginErrorMsg,registerUser,addF
       let posts = await fetch ("http://localhost:8000/articles",{credentials:"include"}).then(response => response.json()).
       then(data => {return data.articles;});
 
+      posts.sort(function(a,b){
+          return new Date(b.date) - new Date(a.date);
+      });
+
+
       headlines[username]=status;
-      
-      const getFollowerPosts = async() => {
+      avatars[username] = avatar;
+      const initializeHeadlinesAndAvatars = async() => {
         for (const follower of followers){
-          let followerPostsUrl = "http://localhost:8000/articles/"+follower;
-          let followerPosts = await fetch(followerPostsUrl,{credentials:"include"}).then(response => response.json()).
-          then(data => {return data.articles;});
-          posts = posts.concat(followerPosts);
           let followerHeadlineUrl = "http://localhost:8000/headline/"+follower;
           let followerHeadline = await fetch (followerHeadlineUrl,{credentials:"include"}).then(response => response.json()).
           then(data => {return data.headline;});
+          let followerAvatarUrl = "http://localhost:8000/avatar/"+follower;
+          let followerAvatar = await fetch(followerAvatarUrl,{credentials:"include"}).then(response => response.json()).
+          then (data => {return data.avatar});
           headlines[follower]=followerHeadline;
+          avatars[follower]=followerAvatar;
         }
-        posts.sort(function(a,b){
-          return new Date(b.date) - new Date(a.date);
-        });
       }
-      await getFollowerPosts();
+
+      
+      await initializeHeadlinesAndAvatars();
       addPosts(posts);
       updateHeadlines(Object.assign({},headlines));
+      updateAvatars(Object.assign({},avatars));
       initializeFilteredPosts([...posts]);
       goToMain();
 
@@ -141,7 +150,8 @@ export const Login = ({goToMain, updateErrorMsg, loginErrorMsg,registerUser,addF
 const mapStateToProps = (state) => {
     return {
         loginErrorMsg: state.loginErrorMsg,
-        headlines: state.headlines
+        headlines: state.headlines,
+        avatars: state.avatars
     }
 };
 const mapDispatchToProps = (dispatch) => {
@@ -152,7 +162,8 @@ const mapDispatchToProps = (dispatch) => {
         addFollowerList: (followers) => dispatch({type:'ADD_FOLLOWER_LIST',followers}),
         addPosts: (posts) => dispatch({type:'UPDATE_POSTS',posts}),
         initializeFilteredPosts: (posts) => dispatch({type:'FILTERED_POSTS',posts}),
-        updateHeadlines: (newHeadlines) => dispatch({type:'UPDATE_HEADLINE',newHeadlines})
+        updateHeadlines: (newHeadlines) => dispatch({type:'UPDATE_HEADLINE',newHeadlines}),
+        updateAvatars: (newAvatars) => dispatch({type:'UPDATE_AVATARS',newAvatars})
     }
 };
 

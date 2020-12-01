@@ -134,17 +134,20 @@ class UpdateInfo extends React.Component{
 
 	    	}
 	    }
-		
-		if (success){
-			this.props.registerUser(Object.assign({},newuser));
-			this.props.updateRegisterMsg(updateMsg);
-			this.props.updateRegisterWarning("");
-			return true;
-		} else{
-			this.props.updateRegisterWarning(warning);
-			this.props.updateRegisterMsg("");
-			return false;
-		}
+
+	    this.props.registerUser(Object.assign({},newuser));
+		this.props.updateRegisterMsg(updateMsg);
+		this.props.updateRegisterWarning(warning);
+		// if (success){
+		// 	this.props.registerUser(Object.assign({},newuser));
+		// 	this.props.updateRegisterMsg(updateMsg);
+		// 	this.props.updateRegisterWarning("");
+		// 	return true;
+		// } else{
+		// 	this.props.updateRegisterWarning(warning);
+		// 	this.props.updateRegisterMsg("");
+		// 	return false;
+		// }
 	}
 
 

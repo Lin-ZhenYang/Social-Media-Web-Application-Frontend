@@ -26,7 +26,7 @@ class MainFollower extends React.Component {
 		}
 	    return (
 		    <div id="singleFollowerDiv">
-			    <img width="200" height="200" src='https://www.sciencemag.org/sites/default/files/styles/article_main_large/public/cat_16x9.jpg?itok=1uV8V4Gl'/><br/>
+			    <img width="200" height="200" src={this.props.avatars[username]}/><br/>
 			    <br/>
 			    <span id="unameSpan">{username}</span>
 			    <br/>
@@ -72,31 +72,24 @@ class MainFollower extends React.Component {
                             this.props.updatePosts([...updatedPosts]);
                             this.props.updateFilteredPosts([...updatedPosts]);
                         });
+                        let followerAvatarUrl = "http://localhost:8000/avatar/"+newFollower;
+                        fetch(followerAvatarUrl,{credentials:"include"}).then(response => response.json()).
+                        then(data => {
+                            let newAvatars = this.props.avatars;
+                            newAvatars[newFollower]=data.avatar;
+                            this.props.updateAvatars(Object.assign({},newAvatars));
+                        });
+                        let headlineUrl = "http://localhost:8000/headline/"+newFollower;
+                        fetch(headlineUrl,{credentials:"include"}).then(response => response.json()).
+                        then(data => {
+                            let newHeadlines = this.props.headlines;
+                            newHeadlines[newFollower]=data.headline;
+                            this.props.updateHeadlines(Object.assign({},newHeadlines));
+                        });
                     }
                 });
             }
         }
-    }
-
-    addNewFollowerPosts = (uid,uname) => {
-    	let newPosts=[];
-        let fetchPost = fetch("https://jsonplaceholder.typicode.com/posts") .then(response => response.json())
-            .then(data => {            	
-	            newPosts=data.filter(post => post.userId == uid);
-	            let i = 0;
-	            for (i;i<newPosts.length;i++){
-	              newPosts[i].time = "Fri May 04 2018 09:17:41 GMT-0500 (Central Daylight Time)";
-	              newPosts[i].username = uname;
-	              newPosts[i].comments = [{author:"Donaldinho",content:"QQQ 300"},{author:"Pumperino",content:"SPY 400"}];
-	              
-	            }	          
-	            Array.prototype.push.apply(newPosts,this.props.posts); 
-	            newPosts.sort(function(a,b){
-                    return new Date(b.time) - new Date(a.time);
-                });
-	            this.props.updatePosts(newPosts);
-                this.props.updateFilteredPosts([...newPosts]);
-            });
     }
 
     render() {
@@ -122,14 +115,17 @@ const mapStateToProps = (state) => {
         user: state.user,
         followers: state.followerList,
         posts:state.userPosts,
-        headlines: state.headlines
+        headlines: state.headlines,
+        avatars:state.avatars
     }
 };
 const mapDispatchToProps = (dispatch) => {
     return {
         addFollowerList: (followers) => dispatch({type:'ADD_FOLLOWER_LIST',followers}),
         updatePosts: (posts) => dispatch({type:'UPDATE_POSTS',posts}),
-        updateFilteredPosts: (posts) => dispatch({type:'FILTERED_POSTS',posts})
+        updateFilteredPosts: (posts) => dispatch({type:'FILTERED_POSTS',posts}),
+        updateAvatars: (newAvatars) => dispatch({type:'UPDATE_AVATARS',newAvatars}),
+        updateHeadlines: (newHeadlines) => dispatch({type:'UPDATE_HEADLINE',newHeadlines})
     } 
 };
 

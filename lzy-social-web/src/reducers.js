@@ -8,7 +8,8 @@ const initialState = {
     followerList:[],
     userPosts:[],
     filteredPosts:[],
-    headlines:[]
+    headlines:[],
+    avatars:{}
 };
 
 const Reducer = ( state=initialState,action) => {
@@ -39,6 +40,8 @@ const Reducer = ( state=initialState,action) => {
             return {...state, headlines: action.newHeadlines}
         case 'LOG_OUT':
             return {...state,user:{}}
+        case 'UPDATE_AVATARS':
+            return {...state,avatars:action.newAvatars}
         default: 
             return state;
     }
