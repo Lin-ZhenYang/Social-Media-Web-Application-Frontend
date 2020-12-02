@@ -63,3 +63,11 @@
 	font-weight: 600;
 	background-color: #1375ed;
 }
+
+.center{
+    text-align: center;
+    display: block;
+    justify-content: center;
+    align-items: center;
+    margin: auto
+}

@@ -88,11 +88,6 @@ export const Login = ({goToMain, updateErrorMsg, loginErrorMsg,registerUser,addF
       let posts = await fetch ("http://localhost:8000/articles",{credentials:"include"}).then(response => response.json()).
       then(data => {return data.articles;});
 
-      posts.sort(function(a,b){
-          return new Date(b.date) - new Date(a.date);
-      });
-
-
       headlines[username]=status;
       avatars[username] = avatar;
       const initializeHeadlinesAndAvatars = async() => {

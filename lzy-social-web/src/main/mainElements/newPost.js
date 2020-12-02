@@ -16,35 +16,65 @@ class NewPost extends React.Component {
         document.getElementById("newPostImageInput").value = null;
     }
 
-    onPostHandler = (postText)=>{
+    onPostHandler (postText){
         postText = postText.trim();
+        var picFile = document.getElementById("newPostImageInput").files[0];
+        const picUrl = "http://localhost:8000/image";
         if (postText.length>0){
-            let postBody = {
-                text: postText
-            }
-            let articlePostUrl = "http://localhost:8000/article";
-            let postPram ={
-                headers:{"content-type":"application/json"},
-                body:JSON.stringify(postBody),
-                method:"POST",
-                credentials:"include"
-            }
-            fetch(articlePostUrl,postPram).then(response => response.json()).
-            then(data => {
-                var newPost ={
-                    _id: data.articles[0]._id,
-                    text: postText,
-                    date: (new Date()).toISOString(),
-                    author:this.props.user.username,
-                    comments:[]
-                };
-                let posts = [...this.props.posts];
-                posts.unshift(newPost);
-                this.props.updatePosts(posts);
-                this.props.updateFilteredPosts([...posts]);
-            });
-        }
+            if (picFile){
+                var formData = new FormData();
+                formData.append("title","");
+                formData.append("image",picFile);
+                let postPram={
+                    body:formData,
+                    method:"POST",
+                    credentials:"include"
+                }
+                fetch(picUrl,postPram).then(response => response.json()).then(data => {
+                    let postBody = {
+                        text: postText,
+                        image: data.url
+                    }
+                    let articlePostUrl = "http://localhost:8000/article";
+                    let postPram ={
+                        headers:{"content-type":"application/json"},
+                        body:JSON.stringify(postBody),
+                        method:"POST",
+                        credentials:"include"
+                    }
+                    fetch(articlePostUrl,postPram).then(
+                        fetch ("http://localhost:8000/articles",{credentials:"include"}).then(response => response.json()).
+                        then(data => {
+                            let posts = data.articles;
+                            this.props.updatePosts(posts);
+                            this.props.updateFilteredPosts([...posts]);
+                        })
+                    );
+                });
+
+            } else {
+                let postBody = {
+                    text: postText
+                }
+                let articlePostUrl = "http://localhost:8000/article";
+                let postPram ={
+                    headers:{"content-type":"application/json"},
+                    body:JSON.stringify(postBody),
+                    method:"POST",
+                    credentials:"include"
+                }
+                fetch(articlePostUrl,postPram).then(
+                    fetch ("http://localhost:8000/articles",{credentials:"include"}).then(response => response.json()).
+                    then(data => {
+                        let posts = data.articles;
+                        this.props.updatePosts(posts);
+                        this.props.updateFilteredPosts([...posts]);
+                    })
+                );
+            }           
+        };
     }
+
     render() {
         return (
             <div id='newPostDiv'>
@@ -59,7 +89,7 @@ class NewPost extends React.Component {
                 </div>
 		        </div>
 		  )
-  }
+    }
 }
 
 const mapStateToProps = (state) => {

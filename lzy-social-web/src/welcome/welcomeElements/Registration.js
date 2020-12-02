@@ -27,7 +27,26 @@ export const Registration = ({goToMain, registerUser, registerErrorMsg,registerE
 	    if (!dobInput.match(dobFormat)){
 			warning+="Birthday has wrong format! Example format: 02-11-1946 (MM-DD-YYYY) ";
 			success=false;
-		}
+		} else {
+			var today = new Date();
+			var currYear = today.getFullYear();
+			var currMonth = today.getMonth()+1;
+			var currDate = today.getDate();
+			var yyyy = dobInput.substring(6,10);
+			var mm = dobInput.substring(0,2);
+			var dd = dobInput.substring(3,5);
+			if (yyyy>currYear || mm>12 || mm<0 || dd>31 || dd<1) {
+				warning += "Invalid date input. Example format: (MM-DD-YYYY)  ";
+				success=false;
+			} else if (currYear-yyyy<18 || (currYear-yyyy==18 && mm>currMonth) ||
+			 (currYear-yyyy==18 && mm==currMonth && dd>currDate) ) {
+			 	warning += "User under 18 cannot register. ";
+			 	success=false;
+		    };
+
+		};
+		
+
     }
 
 	if (!email || email.value.length==0){

@@ -73,6 +73,7 @@ class Posts extends React.Component {
                     const found = this.props.posts.find(element => element._id == postId);
                     found.text = newPost.text;
                     this.props.addPosts([...this.props.posts]);
+                    document.getElementById(eMsgId).innerHTML = "Updated."
                 });
 
     		} else {
@@ -105,6 +106,7 @@ class Posts extends React.Component {
                     const found = this.props.posts.find(element => element._id == postId);
                     found.comments = newPost.comments;
                     this.props.addPosts([...this.props.posts]);
+                    document.getElementById(eMsgId).innerHTML = "Updated."
                 });
     		}
 
@@ -137,6 +139,7 @@ class Posts extends React.Component {
                     const found = this.props.posts.find(element => element._id == postId);
                     found.comments = newPost.comments;
                     this.props.addPosts([...this.props.posts]);
+                    document.getElementById(cMsgId).innerHTML = "Updated."
     		    });
     		} else {
     			document.getElementById(cMsgId).innerHTML = "Empty content not allowed.";
@@ -148,48 +151,49 @@ class Posts extends React.Component {
     	
         return (
 	        <div id='eachPostDiv'>
-	            <span>Author: {post.author}</span><br/>
-	            <span>Time : {post.date.substring(0,10)} {post.date.substring(11,19)} </span><br/>
-		        <img width="200" height="200" src='https://www.nationalgeographic.com/content/dam/news/2018/05/17/you-can-train-your-cat/02-cat-training-NationalGeographic_1484324.ngsversion.1526587209178.adapt.1900.1.jpg'/><br/>
-	            <br/>
-	            <span>{post.text}</span>
-	            <br/>
-	            <button id='editBtn' onClick={()=>{this.handleEditBtn(post._id)}}>Edit</button>
-	            <button id='commentBtn' onClick={()=>{this.handleCommentBtn(post._id)}}>Comment</button>
-	            <br/>
-	            <button id='showHideCommentBtn' onClick={()=>{this.handleShowHide(post._id)}}>Show/Hide Comments</button>
-	            <div id={post._id+"edit"} style={{display: "none", backgroundColor:"#d5e8f5"}}>
-	                <br/>
-	                <span>Select Which to Edit: </span>
-	                <select name="whichToEdit" id={post._id+"type"}>
-					  <option value="toEditArticle">Article</option>
-					  <option value="toEditComment">Comment</option>
-					</select>
-	                <br/>
-	                <br/>
-	                <span>New Content: </span><br/>
-	                <textarea id={post._id+"text"}/><br/>
-	                <span>Comment Index (For Comment Editing Only): </span><br/>
-	                <input type="number" id={post._id+"num"}/><br/>
-	                <button onClick={() => {this.handleEditSubmitBtn(post._id,index)}}>Make Edit</button>
-	                <br/>
-	                <span style={{color:"red"}} id={post._id+"emsg"}></span>
-	            </div>
-	            <div id={post._id+"comment"} style={{display: "none", backgroundColor:"#e4d9fa"}}>
-	                <br/>
-	                <input type="textarea" id={post._id+"commentText"}/><button onClick={() => {this.handleCommentSubmitBtn(post._id,index)}}>Comment</button><br/>
-	                <span style={{color:"red"}} id={post._id+"cmsg"}></span>
-	                <br/>
-	            </div>
-	            <div id={post._id} style={{display: "block"}}>
-	                <ol>
-		                {post.comments.map(comment => {
-		                	return (
-		                		<li>{comment.author} :  {comment.body}</li>
-		                    );
-		                })}
-	                </ol>
-	            </div>
+	            <span style={{color:"blue"}}>Author: {post.author}</span><br/>
+                <span style={{color:"blue"}}>Time : {post.date.substring(0,10)} {post.date.substring(11,19)} </span><br/>
+                <img width="200" height="200" src={post.image} class="center" style={{display: (post.image ? 'block' : 'none')}}/><br/>
+                <br/>
+                <span>{post.text}</span>
+                <br/>
+                <br/>
+                <button id='editBtn' onClick={()=>{this.handleEditBtn(post._id)}}>Edit</button>
+                <button id='commentBtn' onClick={()=>{this.handleCommentBtn(post._id)}}>Comment</button>
+                <br/>
+                <button id='showHideCommentBtn' onClick={()=>{this.handleShowHide(post._id)}}>Show/Hide Comments</button>
+                <div id={post._id+"edit"} style={{display: "none", backgroundColor:"#d5e8f5"}}>
+                    <br/>
+                    <span>Select Which to Edit: </span>
+                    <select name="whichToEdit" id={post._id+"type"}>
+                      <option value="toEditArticle">Article</option>
+                      <option value="toEditComment">Comment</option>
+                    </select>
+                    <br/>
+                    <br/>
+                    <span>New Content: </span><br/>
+                    <textarea id={post._id+"text"}/><br/>
+                    <span>Comment Index (For Comment Editing Only): </span><br/>
+                    <input type="number" id={post._id+"num"}/><br/>
+                    <button onClick={() => {this.handleEditSubmitBtn(post._id,index)}}>Make Edit</button>
+                    <br/>
+                    <span style={{color:"red"}} id={post._id+"emsg"}></span>
+                </div>
+                <div id={post._id+"comment"} style={{display: "none", backgroundColor:"#e4d9fa"}}>
+                    <br/>
+                    <input type="textarea" id={post._id+"commentText"}/><button onClick={() => {this.handleCommentSubmitBtn(post._id,index)}}>Comment</button><br/>
+                    <span style={{color:"red"}} id={post._id+"cmsg"}></span>
+                    <br/>
+                </div>
+                <div id={post._id} style={{display: "block"}}>
+                    <ol>
+                        {post.comments.map(comment => {
+                            return (
+                                <li>{comment.author} :  {comment.body}</li>
+                            );
+                        })}
+                    </ol>
+                </div>
 			</div>
 		);
     }
