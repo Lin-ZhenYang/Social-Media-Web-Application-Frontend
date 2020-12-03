@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import './loginAndRegisStyle.css';
 
@@ -8,7 +7,7 @@ export const Registration = ({goToMain, registerUser, registerErrorMsg,registerE
 	var warning = "";
 	var success = true;
     
-    if (!uname || uname.value.length==0){
+    if (!uname || uname.value.length===0){
     	warning+="User name should not be empty. ";
     	success = false;
     } else{
@@ -18,7 +17,7 @@ export const Registration = ({goToMain, registerUser, registerErrorMsg,registerE
     	}
     }
     
-    if (!dob || dob.value.length==0){
+    if (!dob || dob.value.length===0){
     	warning+="Date of birth should not be empty. ";
     	success = false;
     } else{
@@ -38,8 +37,8 @@ export const Registration = ({goToMain, registerUser, registerErrorMsg,registerE
 			if (yyyy>currYear || mm>12 || mm<0 || dd>31 || dd<1) {
 				warning += "Invalid date input. Example format: (MM-DD-YYYY)  ";
 				success=false;
-			} else if (currYear-yyyy<18 || (currYear-yyyy==18 && mm>currMonth) ||
-			 (currYear-yyyy==18 && mm==currMonth && dd>currDate) ) {
+			} else if (currYear-yyyy<18 || (currYear-yyyy===18 && mm>currMonth) ||
+			 (currYear-yyyy===18 && mm===currMonth && dd>currDate) ) {
 			 	warning += "User under 18 cannot register. ";
 			 	success=false;
 		    };
@@ -49,7 +48,7 @@ export const Registration = ({goToMain, registerUser, registerErrorMsg,registerE
 
     }
 
-	if (!email || email.value.length==0){
+	if (!email || email.value.length===0){
 		warning +=" Email cannot be empty. ";
 		success = false;
 	} else {
@@ -61,7 +60,7 @@ export const Registration = ({goToMain, registerUser, registerErrorMsg,registerE
     
  
     
-	if (!phone || phone.value.length==0){
+	if (!phone || phone.value.length===0){
 		warning+="Phone number cannot be empty. "
 		success = false;
 	} else{
@@ -74,7 +73,7 @@ export const Registration = ({goToMain, registerUser, registerErrorMsg,registerE
 	}
 
 
-	if (!zipcode || zipcode.value.length==0){
+	if (!zipcode || zipcode.value.length===0){
 		warning += "Zipcode cannot be empty. "
 		success = false;
 	} else {
@@ -86,12 +85,12 @@ export const Registration = ({goToMain, registerUser, registerErrorMsg,registerE
 		}
 	}
     
-    if (!pw1 || pw1.value.length==0){
+    if (!pw1 || pw1.value.length===0){
     	warning += "Password cannot be empty. "
 		success = false;
     } 
 
-    if (!pw2 || pw2.value.length==0){
+    if (!pw2 || pw2.value.length===0){
     	warning += "Password confirmation cannot be empty. "
 		success = false;
     }

@@ -1,6 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-//import IndividualFollower from './individualFollower';
 import { connect } from 'react-redux';
 import './mainElementsStyle.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -96,7 +94,7 @@ class MainFollower extends React.Component {
 	    return (
 	        <div id="followersDiv">
 	          {this.props.followers.map((person,index) => (
-	          	<this.IndividualFollower key={person.id} username={person} headline={this.props.headlines[person]} />
+	          	<this.IndividualFollower key={index} username={person} headline={this.props.headlines[person]} />
 	          ))}
 	          <br/>
 	          <input id="newFollowerInput"></input>

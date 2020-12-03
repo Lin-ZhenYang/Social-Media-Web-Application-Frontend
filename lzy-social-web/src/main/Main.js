@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import MainUser from './mainElements/mainUser';
 import MainFollower from './mainElements/mainFollower';
 import NewPost from './mainElements/newPost';
@@ -7,11 +6,6 @@ import SearchBar from './mainElements/searchBar';
 import Posts from './mainElements/posts';
 
 class Main extends React.Component {
-  constructor(props) {
-        super(props);
-  }
-
-
   render() {
     return (
         <div>

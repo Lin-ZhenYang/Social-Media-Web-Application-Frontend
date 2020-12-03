@@ -3,13 +3,13 @@ import './App.css';
 import Welcome from './welcome/welcome';
 import Main from './main/Main';
 import Profile from './profile/Profile';
-import { connect } from 'react-redux';
+import { connect} from 'react-redux';
 
 const App = ({location}) => {
   let currView;
-  if (location=="main"){
+  if (location==="main"){
     currView = <Main />;
-  } else if (location=="profile"){
+  } else if (location==="profile"){
     currView = <Profile />
   } else {
     currView = <Welcome />
@@ -19,6 +19,7 @@ const App = ({location}) => {
       {currView}
     </div>
   )
+  
 }
 
 export default connect((state)=>{

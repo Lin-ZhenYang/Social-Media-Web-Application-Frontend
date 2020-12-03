@@ -1,17 +1,16 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import './mainElementsStyle.css';
 
 class MainUser extends React.Component{
-    constructor(props) {
-      super(props);
-    }
     onLogout = () => {
-      this.props.goToWelcome();
       this.props.logOut();
-      this.props.registerError("");
-      this.props.updateErrorMsg("");
+      let logOutUrl = "http://localhost:8000/logout";
+      let logOutPram = {
+        method:"PUT",
+        credentials:"include"
+      };
+      fetch(logOutUrl,logOutPram);
     }
 
     onProfile = () => {

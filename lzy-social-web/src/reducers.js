@@ -39,7 +39,19 @@ const Reducer = ( state=initialState,action) => {
         case 'UPDATE_HEADLINE':
             return {...state, headlines: action.newHeadlines}
         case 'LOG_OUT':
-            return {...state,user:{}}
+            return {...state,
+                location: "welcome",
+                user:{},
+                profileUpdateMsg:"",
+                profileUpdateWarning:"",
+                registerErrorMsg: "",
+                loginErrorMsg:"",
+                followerList:[],
+                userPosts:[],
+                filteredPosts:[],
+                headlines:[],
+                avatars:{}
+            }
         case 'UPDATE_AVATARS':
             return {...state,avatars:action.newAvatars}
         default: 

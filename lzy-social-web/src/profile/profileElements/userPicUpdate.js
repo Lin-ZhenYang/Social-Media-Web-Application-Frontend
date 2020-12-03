@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import './updateInfo.css';
 import { connect } from 'react-redux';
 

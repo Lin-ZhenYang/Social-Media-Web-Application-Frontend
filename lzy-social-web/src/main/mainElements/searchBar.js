@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { connect } from 'react-redux';
@@ -11,7 +10,7 @@ export const SearchBar = ({posts,updateFilteredPosts}) => {
 		searchInput=searchInput.trim();
 		let newFilteredPosts = [];
 		if (searchInput.length>0){
-            newFilteredPosts = postsCopy.filter(function(postCopy){ return (postCopy.text.indexOf(searchInput) != -1) || (postCopy.author.indexOf(searchInput)!=-1) });
+            newFilteredPosts = postsCopy.filter(function(postCopy){ return (postCopy.text.indexOf(searchInput) !== -1) || (postCopy.author.indexOf(searchInput)!==-1) });
             updateFilteredPosts(newFilteredPosts);
             console.log(newFilteredPosts);
 		} else{

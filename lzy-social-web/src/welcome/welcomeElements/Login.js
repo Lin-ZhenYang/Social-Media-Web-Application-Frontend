@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { faKey } from '@fortawesome/free-solid-svg-icons';
@@ -32,7 +31,7 @@ export const Login = ({goToMain, updateErrorMsg, loginErrorMsg,registerUser,addF
       }
 
       fetch(loginUrl,otherPram).then(response => {
-        if (response.status == 401){
+        if (response.status === 401){
           loginError = "Unregistered user or incorrect password";
           updateErrorMsg(loginError);
         } else {
@@ -45,6 +44,21 @@ export const Login = ({goToMain, updateErrorMsg, loginErrorMsg,registerUser,addF
     return true;
   }
 
+  const onFbLogin = () => {
+    window.top.location = "http://localhost:8000/auth/facebook";
+  }
+
+  const onFbEnter = () => {
+    fetch ("http://localhost:8000/headline",{credentials:"include"}).then(response => {
+      if (response.status !== 200){
+        loginError = "Facebook Authorization Unsuccessful";
+        updateErrorMsg(loginError);
+      } else {
+        initializeData();
+      }
+    });
+  }
+
   async function initializeData (){
       let username;
       let dob;
@@ -52,24 +66,17 @@ export const Login = ({goToMain, updateErrorMsg, loginErrorMsg,registerUser,addF
       let phone;
       let zipcode;
       let status;
-      let userid;
       let avatar;
 
-      dob = await fetch ("http://localhost:8000/dob",{credentials:"include"}).then(response => response.json()).
-      then(data => {
+      dob = await fetch ("http://localhost:8000/dob",{credentials:"include"}).then(response => response.json()).then(data => {
           username = data.username;
           return data.dob;
       });
-      email = await fetch ("http://localhost:8000/email",{credentials:"include"}).then(response => response.json()).
-      then(data => {return data.email;});
-      phone = await fetch ("http://localhost:8000/phone",{credentials:"include"}).then(response => response.json()).
-      then(data => {return data.phone;});
-      zipcode = await fetch ("http://localhost:8000/zipcode",{credentials:"include"}).then(response => response.json()).
-      then(data => {return data.zipcode;});
-      status = await fetch ("http://localhost:8000/headline",{credentials:"include"}).then(response => response.json()).
-      then(data => {return data.headline;});
-      avatar = await fetch ("http://localhost:8000/avatar",{credentials:"include"}).then(response => response.json()).
-      then(data => {return data.avatar;});
+      email = await fetch ("http://localhost:8000/email",{credentials:"include"}).then(response => response.json()).then(data => {return data.email;});
+      phone = await fetch ("http://localhost:8000/phone",{credentials:"include"}).then(response => response.json()).then(data => {return data.phone;});
+      zipcode = await fetch ("http://localhost:8000/zipcode",{credentials:"include"}).then(response => response.json()).then(data => {return data.zipcode;});
+      status = await fetch ("http://localhost:8000/headline",{credentials:"include"}).then(response => response.json()).then(data => {return data.headline;});
+      avatar = await fetch ("http://localhost:8000/avatar",{credentials:"include"}).then(response => response.json()).then(data => {return data.avatar;});
       let newUser = {
         username: username,
         dob: dob,
@@ -81,23 +88,19 @@ export const Login = ({goToMain, updateErrorMsg, loginErrorMsg,registerUser,addF
       }
       registerUser(newUser);
 
-      let followers = await fetch ("http://localhost:8000/following",{credentials:"include"}).then(response => response.json()).
-      then(data => {return data.following;});
+      let followers = await fetch ("http://localhost:8000/following",{credentials:"include"}).then(response => response.json()).then(data => {return data.following;});
       addFollowerList(followers);
 
-      let posts = await fetch ("http://localhost:8000/articles",{credentials:"include"}).then(response => response.json()).
-      then(data => {return data.articles;});
+      let posts = await fetch ("http://localhost:8000/articles",{credentials:"include"}).then(response => response.json()).then(data => {return data.articles;});
 
       headlines[username]=status;
       avatars[username] = avatar;
       const initializeHeadlinesAndAvatars = async() => {
         for (const follower of followers){
           let followerHeadlineUrl = "http://localhost:8000/headline/"+follower;
-          let followerHeadline = await fetch (followerHeadlineUrl,{credentials:"include"}).then(response => response.json()).
-          then(data => {return data.headline;});
+          let followerHeadline = await fetch (followerHeadlineUrl,{credentials:"include"}).then(response => response.json()).then(data => {return data.headline;});
           let followerAvatarUrl = "http://localhost:8000/avatar/"+follower;
-          let followerAvatar = await fetch(followerAvatarUrl,{credentials:"include"}).then(response => response.json()).
-          then (data => {return data.avatar});
+          let followerAvatar = await fetch(followerAvatarUrl,{credentials:"include"}).then(response => response.json()).then (data => {return data.avatar});
           headlines[follower]=followerHeadline;
           avatars[follower]=followerAvatar;
         }
@@ -129,12 +132,27 @@ export const Login = ({goToMain, updateErrorMsg, loginErrorMsg,registerUser,addF
             </tr>
             <tr>
               <td></td>
-              <td><button type="button" id="loginBtn" onClick={()=>{onLogin(loginUname,loginPw)}}>Login</button></td>
-            </tr>
+              <td><button type="button" id="loginBtn" onClick={()=>{onLogin(loginUname,loginPw)}}>Local Login</button></td>
+            </tr>     
           </tbody>
         </table>
         <div className="alert alert-warning" role="alert" id="failMsg">
                <strong></strong><span id = "failText">{loginErrorMsg}</span>
+        </div>
+        <table className="table">
+          <tbody>
+            <tr>
+              <td></td>
+              <td><button type="button" id="fbLoginBtn" onClick={()=>{onFbLogin()}}>Facebook Login</button></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td><button type="button" id="fbEnterBtn" onClick={()=>{onFbEnter()}}>Facebook Enter</button></td>
+            </tr>
+          </tbody>
+        </table>
+        <div className="alert alert-warning" role="alert" id="fbMsg" style={{backgroundColor:"#d5e8f5"}}>
+               <strong></strong><span id = "fbText">Click "Facebook Login" First and then click "Facebook Enter"</span>
         </div>
       </div>
     </div>

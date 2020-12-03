@@ -1,15 +1,10 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import UpdateInfo from "./profileElements/updateInfo";
 import UserPicUpdate from "./profileElements/userPicUpdate";
 import { connect } from 'react-redux';
 import './profile.css';
 
 class Profile extends React.Component{
-  constructor(props) {
-        super(props);
-    }
-
   onBackMain = () => {
     this.props.goToMain();
     this.props.updateRegisterWarning("");

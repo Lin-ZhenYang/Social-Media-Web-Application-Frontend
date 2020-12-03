@@ -1,5 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import { connect } from 'react-redux';
 import './updateInfo.css';
 import 'bootstrap/dist/css/bootstrap.min.css';

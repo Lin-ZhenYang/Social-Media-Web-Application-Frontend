@@ -1,19 +1,12 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-//import IndividualPost from './individualPost';
 import { connect } from 'react-redux';
 import './newPost.css';
 
 class Posts extends React.Component {
-    constructor(props) {
-        super(props);
-    }
-    
-
     IndividualPost = ({post,index}) => {
     	
     	this.handleShowHide = (postId) =>{
-    		if(document.getElementById(postId).style.display=="block"){
+    		if(document.getElementById(postId).style.display==="block"){
     			document.getElementById(postId).style.display="none";
     		} else{
                 document.getElementById(postId).style.display="block";
@@ -22,7 +15,7 @@ class Posts extends React.Component {
 
     	this.handleEditBtn = (postId) => {
     		let editId = postId + "edit";
-    		if(document.getElementById(editId).style.display=="block"){
+    		if(document.getElementById(editId).style.display==="block"){
     			document.getElementById(editId).style.display="none";
     		} else{
                 document.getElementById(editId).style.display="block";
@@ -31,7 +24,7 @@ class Posts extends React.Component {
 
     	this.handleCommentBtn = (postId) => {
     		let cmtId = postId+"comment";
-    		if(document.getElementById(cmtId).style.display=="block"){
+    		if(document.getElementById(cmtId).style.display==="block"){
     			document.getElementById(cmtId).style.display="none";
     		} else{
                 document.getElementById(cmtId).style.display="block";
@@ -45,7 +38,6 @@ class Posts extends React.Component {
     		let contentType = document.getElementById(postId+"type").value;
     		let eMsgId = postId + "emsg";
     		let post = this.props.filteredPosts[index];
-    		console.log(post);
 
     		if (!newContent){
     				document.getElementById(eMsgId).innerHTML = "Empty content not allowed.";
@@ -153,7 +145,7 @@ class Posts extends React.Component {
 	        <div id='eachPostDiv'>
 	            <span style={{color:"blue"}}>Author: {post.author}</span><br/>
                 <span style={{color:"blue"}}>Time : {post.date.substring(0,10)} {post.date.substring(11,19)} </span><br/>
-                <img width="200" height="200" src={post.image} class="center" style={{display: (post.image ? 'block' : 'none')}}/><br/>
+                <img width="200" height="200" src={post.image} className="center" style={{display: (post.image ? 'block' : 'none')}}/><br/>
                 <br/>
                 <span>{post.text}</span>
                 <br/>
@@ -189,7 +181,7 @@ class Posts extends React.Component {
                     <ol>
                         {post.comments.map(comment => {
                             return (
-                                <li>{comment.author} :  {comment.body}</li>
+                                <li key={comment._id}>{comment.author} :  {comment.body}</li>
                             );
                         })}
                     </ol>
