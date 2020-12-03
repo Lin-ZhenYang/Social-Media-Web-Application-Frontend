@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 class UserPicUpdate extends React.Component {
 
 	onUploadHandler = () => {
-		const picUrl = "http://localhost:8000/image";
+		const picUrl = "https://lzy-social-backend.herokuapp.com/image";
 		var picFile = document.getElementById("profilePicUpload").files[0]; 
 		if (picFile){
 			var formData = new FormData();
@@ -22,7 +22,7 @@ class UserPicUpdate extends React.Component {
 	        	updatedUser.avatar = data.url;
 	        	this.props.registerUser(Object.assign({},updatedUser));
 
-	        	let avatarPutUrl = "http://localhost:8000/avatar";
+	        	let avatarPutUrl = "https://lzy-social-backend.herokuapp.com/avatar";
 	        	let avatarData = {avatar:data.url};
 	        	let putPram ={
 	        		headers:{"content-type":"application/json"},

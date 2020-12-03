@@ -115,7 +115,7 @@ export const Registration = ({goToMain, registerUser, registerErrorMsg,registerE
 
   const submitBtnHandler = (uname,dobInput,emailInput,phoneInput,zipcodeInput,pw1,pw2) => {
   	if (validateInfo(uname,dobInput,emailInput,phoneInput,zipcodeInput,pw1,pw2)){
-  		const regisUrl = "http://localhost:8000/register";
+  		const regisUrl = "https://lzy-social-backend.herokuapp.com/register";
 	    let newUser = {
           username: uname.value,
           dob: dobInput.value,

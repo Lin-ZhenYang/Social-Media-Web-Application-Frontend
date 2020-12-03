@@ -10,7 +10,7 @@ class MainFollower extends React.Component {
 		  	var newFollowerList = this.props.followers;
 		  	newFollowerList = newFollowerList.filter(follower => follower!=username);
             this.props.addFollowerList(newFollowerList);
-            let deleteFollowerUrl = "http://localhost:8000/following/"+username;
+            let deleteFollowerUrl = "https://lzy-social-backend.herokuapp.com/following/"+username;
             let deletePram={
               headers:{"content-type":"application/json"},
               method:"DELETE",
@@ -45,7 +45,7 @@ class MainFollower extends React.Component {
             } else if (newFollower == this.props.user.username) {
                 document.getElementById("addFailText").innerHTML = "Can't follow yourself!";
             } else {
-                let addFollowerUrl = "http://localhost:8000/following/"+newFollower;
+                let addFollowerUrl = "https://lzy-social-backend.herokuapp.com/following/"+newFollower;
                 let putPram={
                   headers:{"content-type":"application/json"},
                   method:"PUT",
@@ -59,7 +59,7 @@ class MainFollower extends React.Component {
                         let updatedFollowers = data.following;
                         this.props.addFollowerList(updatedFollowers);
                         document.getElementById("addFailText").innerHTML = "User "+newFollower+" followed!";
-                        let followerPostsUrl = "http://localhost:8000/articles/"+newFollower;
+                        let followerPostsUrl = "https://lzy-social-backend.herokuapp.com/articles/"+newFollower;
                         fetch(followerPostsUrl,{credentials:"include"}).then(response => response.json()).
                         then(data => {
                             let updatedPosts = this.props.posts;
@@ -70,14 +70,14 @@ class MainFollower extends React.Component {
                             this.props.updatePosts([...updatedPosts]);
                             this.props.updateFilteredPosts([...updatedPosts]);
                         });
-                        let followerAvatarUrl = "http://localhost:8000/avatar/"+newFollower;
+                        let followerAvatarUrl = "https://lzy-social-backend.herokuapp.com/avatar/"+newFollower;
                         fetch(followerAvatarUrl,{credentials:"include"}).then(response => response.json()).
                         then(data => {
                             let newAvatars = this.props.avatars;
                             newAvatars[newFollower]=data.avatar;
                             this.props.updateAvatars(Object.assign({},newAvatars));
                         });
-                        let headlineUrl = "http://localhost:8000/headline/"+newFollower;
+                        let headlineUrl = "https://lzy-social-backend.herokuapp.com/headline/"+newFollower;
                         fetch(headlineUrl,{credentials:"include"}).then(response => response.json()).
                         then(data => {
                             let newHeadlines = this.props.headlines;

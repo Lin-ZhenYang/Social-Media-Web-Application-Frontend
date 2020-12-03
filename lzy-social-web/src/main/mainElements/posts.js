@@ -44,7 +44,7 @@ class Posts extends React.Component {
     				return;
     			}
 
-            let putArticleUrl = "http://localhost:8000/articles/" + post._id;
+            let putArticleUrl = "https://lzy-social-backend.herokuapp.com/articles/" + post._id;
     		if (contentType == "toEditArticle") {
     			if (this.props.user.username != post.author){
     				document.getElementById(eMsgId).innerHTML = "You do not own this article.";
@@ -111,7 +111,7 @@ class Posts extends React.Component {
     		let post = this.props.filteredPosts[index];
             let newFilteredPosts = this.props.filteredPosts;
     		newComment = newComment.trim();
-    		let putArticleUrl = "http://localhost:8000/articles/" + post._id;
+    		let putArticleUrl = "https://lzy-social-backend.herokuapp.com/articles/" + post._id;
     		if (newComment){
     			let data = {
     				"commentId":-1,

@@ -18,7 +18,7 @@ class NewPost extends React.Component {
     onPostHandler (postText){
         postText = postText.trim();
         var picFile = document.getElementById("newPostImageInput").files[0];
-        const picUrl = "http://localhost:8000/image";
+        const picUrl = "https://lzy-social-backend.herokuapp.com/image";
         if (postText.length>0){
             if (picFile){
                 var formData = new FormData();
@@ -34,7 +34,7 @@ class NewPost extends React.Component {
                         text: postText,
                         image: data.url
                     }
-                    let articlePostUrl = "http://localhost:8000/article";
+                    let articlePostUrl = "https://lzy-social-backend.herokuapp.com/article";
                     let postPram ={
                         headers:{"content-type":"application/json"},
                         body:JSON.stringify(postBody),
@@ -42,7 +42,7 @@ class NewPost extends React.Component {
                         credentials:"include"
                     }
                     fetch(articlePostUrl,postPram).then(
-                        fetch ("http://localhost:8000/articles",{credentials:"include"}).then(response => response.json()).
+                        fetch ("https://lzy-social-backend.herokuapp.com/articles",{credentials:"include"}).then(response => response.json()).
                         then(data => {
                             let posts = data.articles;
                             this.props.updatePosts(posts);
@@ -55,7 +55,7 @@ class NewPost extends React.Component {
                 let postBody = {
                     text: postText
                 }
-                let articlePostUrl = "http://localhost:8000/article";
+                let articlePostUrl = "https://lzy-social-backend.herokuapp.com/article";
                 let postPram ={
                     headers:{"content-type":"application/json"},
                     body:JSON.stringify(postBody),
@@ -63,7 +63,7 @@ class NewPost extends React.Component {
                     credentials:"include"
                 }
                 fetch(articlePostUrl,postPram).then(
-                    fetch ("http://localhost:8000/articles",{credentials:"include"}).then(response => response.json()).
+                    fetch ("https://lzy-social-backend.herokuapp.com/articles",{credentials:"include"}).then(response => response.json()).
                     then(data => {
                         let posts = data.articles;
                         this.props.updatePosts(posts);

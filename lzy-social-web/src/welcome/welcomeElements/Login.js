@@ -18,7 +18,7 @@ export const Login = ({goToMain, updateErrorMsg, loginErrorMsg,registerUser,addF
       updateErrorMsg(loginError);
       return false;
     } else{
-      const loginUrl = "http://localhost:8000/login";
+      const loginUrl = "https://lzy-social-backend.herokuapp.com/login";
       let loginUser = {
           username: uname.value,
           password: pw.value
@@ -45,11 +45,11 @@ export const Login = ({goToMain, updateErrorMsg, loginErrorMsg,registerUser,addF
   }
 
   const onFbLogin = () => {
-    window.top.location = "http://localhost:8000/auth/facebook";
+    window.top.location = "https://lzy-social-backend.herokuapp.com/auth/facebook";
   }
 
   const onFbEnter = () => {
-    fetch ("http://localhost:8000/headline",{credentials:"include"}).then(response => {
+    fetch ("https://lzy-social-backend.herokuapp.com/headline",{credentials:"include"}).then(response => {
       if (response.status !== 200){
         loginError = "Facebook Authorization Unsuccessful";
         updateErrorMsg(loginError);
@@ -68,15 +68,15 @@ export const Login = ({goToMain, updateErrorMsg, loginErrorMsg,registerUser,addF
       let status;
       let avatar;
 
-      dob = await fetch ("http://localhost:8000/dob",{credentials:"include"}).then(response => response.json()).then(data => {
+      dob = await fetch ("https://lzy-social-backend.herokuapp.com/dob",{headers:{"content-type":"application/json"},credentials:"include"}).then(response => response.json()).then(data => {
           username = data.username;
           return data.dob;
       });
-      email = await fetch ("http://localhost:8000/email",{credentials:"include"}).then(response => response.json()).then(data => {return data.email;});
-      phone = await fetch ("http://localhost:8000/phone",{credentials:"include"}).then(response => response.json()).then(data => {return data.phone;});
-      zipcode = await fetch ("http://localhost:8000/zipcode",{credentials:"include"}).then(response => response.json()).then(data => {return data.zipcode;});
-      status = await fetch ("http://localhost:8000/headline",{credentials:"include"}).then(response => response.json()).then(data => {return data.headline;});
-      avatar = await fetch ("http://localhost:8000/avatar",{credentials:"include"}).then(response => response.json()).then(data => {return data.avatar;});
+      email = await fetch ("https://lzy-social-backend.herokuapp.com/email",{headers:{"content-type":"application/json"},credentials:"include"}).then(response => response.json()).then(data => {return data.email;});
+      phone = await fetch ("https://lzy-social-backend.herokuapp.com/phone",{headers:{"content-type":"application/json"},credentials:"include"}).then(response => response.json()).then(data => {return data.phone;});
+      zipcode = await fetch ("https://lzy-social-backend.herokuapp.com/zipcode",{headers:{"content-type":"application/json"},credentials:"include"}).then(response => response.json()).then(data => {return data.zipcode;});
+      status = await fetch ("https://lzy-social-backend.herokuapp.com/headline",{headers:{"content-type":"application/json"},credentials:"include"}).then(response => response.json()).then(data => {return data.headline;});
+      avatar = await fetch ("https://lzy-social-backend.herokuapp.com/avatar",{headers:{"content-type":"application/json"},credentials:"include"}).then(response => response.json()).then(data => {return data.avatar;});
       let newUser = {
         username: username,
         dob: dob,
@@ -88,18 +88,18 @@ export const Login = ({goToMain, updateErrorMsg, loginErrorMsg,registerUser,addF
       }
       registerUser(newUser);
 
-      let followers = await fetch ("http://localhost:8000/following",{credentials:"include"}).then(response => response.json()).then(data => {return data.following;});
+      let followers = await fetch ("https://lzy-social-backend.herokuapp.com/following",{credentials:"include"}).then(response => response.json()).then(data => {return data.following;});
       addFollowerList(followers);
 
-      let posts = await fetch ("http://localhost:8000/articles",{credentials:"include"}).then(response => response.json()).then(data => {return data.articles;});
+      let posts = await fetch ("https://lzy-social-backend.herokuapp.com/articles",{credentials:"include"}).then(response => response.json()).then(data => {return data.articles;});
 
       headlines[username]=status;
       avatars[username] = avatar;
       const initializeHeadlinesAndAvatars = async() => {
         for (const follower of followers){
-          let followerHeadlineUrl = "http://localhost:8000/headline/"+follower;
+          let followerHeadlineUrl = "https://lzy-social-backend.herokuapp.com/headline/"+follower;
           let followerHeadline = await fetch (followerHeadlineUrl,{credentials:"include"}).then(response => response.json()).then(data => {return data.headline;});
-          let followerAvatarUrl = "http://localhost:8000/avatar/"+follower;
+          let followerAvatarUrl = "https://lzy-social-backend.herokuapp.com/avatar/"+follower;
           let followerAvatar = await fetch(followerAvatarUrl,{credentials:"include"}).then(response => response.json()).then (data => {return data.avatar});
           headlines[follower]=followerHeadline;
           avatars[follower]=followerAvatar;

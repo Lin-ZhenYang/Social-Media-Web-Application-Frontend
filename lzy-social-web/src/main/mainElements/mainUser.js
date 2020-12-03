@@ -5,7 +5,7 @@ import './mainElementsStyle.css';
 class MainUser extends React.Component{
     onLogout = () => {
       this.props.logOut();
-      let logOutUrl = "http://localhost:8000/logout";
+      let logOutUrl = "https://lzy-social-backend.herokuapp.com/logout";
       let logOutPram = {
         method:"PUT",
         credentials:"include"
@@ -21,7 +21,7 @@ class MainUser extends React.Component{
         let newHeadlines = this.props.headlines;
         newHeadlines[this.props.user.username] = newStatus;
         this.props.updateHeadlines(Object.assign({},newHeadlines));  
-        let headlineUrl = "http://localhost:8000/headline";
+        let headlineUrl = "https://lzy-social-backend.herokuapp.com/headline";
         let headlineData = {"headline":newStatus};
         let putPram={
               headers:{"content-type":"application/json"},

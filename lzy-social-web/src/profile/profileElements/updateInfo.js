@@ -36,7 +36,7 @@ class UpdateInfo extends React.Component{
 			} else{
 	    		updateMsg+="Date of birth updated. ";
 	    		newuser.dob = dob.value;
-	    		let dobUrl = "http://localhost:8000/dob";
+	    		let dobUrl = "https://lzy-social-backend.herokuapp.com/dob";
 	    		let dobData = {"dob":dob.value};
 	    		let putPram={
 		          headers:{"content-type":"application/json"},
@@ -55,7 +55,7 @@ class UpdateInfo extends React.Component{
 			} else{
 	    		updateMsg+="Email updated. ";
 	    		newuser.email = email.value;
-	    		let emailUrl = "http://localhost:8000/email";
+	    		let emailUrl = "https://lzy-social-backend.herokuapp.com/email";
 	    		let emailData = {"email":email.value};
 	    		let putPram={
 		          headers:{"content-type":"application/json"},
@@ -78,7 +78,7 @@ class UpdateInfo extends React.Component{
 			} else{
 	    		updateMsg+="Phone number updated. ";
 	    		newuser.phone = phone.value;
-	    		let phoneUrl = "http://localhost:8000/phone";
+	    		let phoneUrl = "https://lzy-social-backend.herokuapp.com/phone";
 	    		let phoneData = {"phone":phone.value};
 	    		let putPram={
 		          headers:{"content-type":"application/json"},
@@ -100,7 +100,7 @@ class UpdateInfo extends React.Component{
 			} else{
 	    		updateMsg+="Zipcode updated. ";
 	    		newuser.zipcode = zipcode.value;
-	    		let zipcodeUrl = "http://localhost:8000/zipcode";
+	    		let zipcodeUrl = "https://lzy-social-backend.herokuapp.com/zipcode";
 	    		let zipcodeData = {"zipcode":zipcode.value};
 	    		let putPram={
 		          headers:{"content-type":"application/json"},
@@ -121,7 +121,7 @@ class UpdateInfo extends React.Component{
 			} else{
 	    		updateMsg+="Password updated. ";
 	    		newuser.password = pw1.value;
-	    		let pwUrl = "http://localhost:8000/password";
+	    		let pwUrl = "https://lzy-social-backend.herokuapp.com/password";
 	    		let pwData = {"password":pw1.value};
 	    		let putPram={
 		          headers:{"content-type":"application/json"},
@@ -137,16 +137,6 @@ class UpdateInfo extends React.Component{
 	    this.props.registerUser(Object.assign({},newuser));
 		this.props.updateRegisterMsg(updateMsg);
 		this.props.updateRegisterWarning(warning);
-		// if (success){
-		// 	this.props.registerUser(Object.assign({},newuser));
-		// 	this.props.updateRegisterMsg(updateMsg);
-		// 	this.props.updateRegisterWarning("");
-		// 	return true;
-		// } else{
-		// 	this.props.updateRegisterWarning(warning);
-		// 	this.props.updateRegisterMsg("");
-		// 	return false;
-		// }
 	}
 
 
